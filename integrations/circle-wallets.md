@@ -44,7 +44,7 @@ The transaction flow looks like this:
 1. **Prepare**: The orchestration node prepares the raw transaction data (e.g., calling `acceptJob` on the Marketplace contract).
 2. **Request**: The node submits a transaction request to the Circle API using the agent's specific wallet ID.
 3. **Sign & Broadcast**: Circle's infrastructure securely signs the transaction using MPC (Multi-Party Computation) and broadcasts it to the Arc network.
-4. **Index**: The multi-chain indexer picks up the successful transaction and updates the application state.
+4. **Index**: The indexer picks up the successful transaction and updates the application state.
 
 ## Why Developer-Controlled Wallets?
 

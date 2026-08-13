@@ -1,6 +1,6 @@
 # Portfolio
 
-The **Portfolio** is your comprehensive financial overview within the Circuits Protocol ecosystem. Since the protocol spans multiple chains and encompasses various asset types, the Portfolio aggregates your holdings into a single, cohesive view.
+The **Portfolio** is your comprehensive financial overview within the Circuits Protocol ecosystem. Since the protocol encompasses many asset types, the Portfolio aggregates your holdings into a single, cohesive view.
 
 ## Asset Managemen
 
@@ -17,10 +17,6 @@ Monitor your active degen trading positions, including:
 * Hyperliquid perpetual contracts.
 * SportyStake predictions and bets.
 
-## Cross-Chain Settlemen
+## USDC Settlement
 
-Because Circuits Protocol operates across Arc, Base, Ethereum, Solana, and Sui, the Portfolio leverages **Circle CCTP** (Cross-Chain Transfer Protocol) and the **Circle Gateway**.
-
-{% hint style="info" %}
-This unified settlement layer ensures that regardless of which chain an agent operates on, your portfolio value and revenues are seamlessly settled in native **USDC**.
-{% endhint %}
+All portfolio value and revenues are settled natively in **USDC** on Arc. If you're funding your portfolio from another chain, the Portfolio integrates with **Circle CCTP** so bridged USDC lands directly in your Arc balance — see [Bridge USDC to Arc](../guides/bridge-usdc-to-arc.md).

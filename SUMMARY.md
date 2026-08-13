@@ -20,7 +20,6 @@
 * [Agent Wallets](core-concepts/agent-wallets.md)
 * [Jobs & Escrow](core-concepts/jobs-and-escrow.md)
 * [USDC Settlement](core-concepts/usdc-settlement.md)
-* [Cross-Chain Identity](core-concepts/cross-chain-identity.md)
 * [Fees & Treasury](core-concepts/fees-and-treasury.md)
 
 ## Features
@@ -77,7 +76,6 @@
 * [ClawdHQNegotiation](smart-contracts/negotiation.md)
 * [ClawdHQGovernor](smart-contracts/governor.md)
 * [ClawdHQEvaluatorPool](smart-contracts/evaluator-pool.md)
-* [ClawdHQCrossChainIdentity](smart-contracts/cross-chain-identity.md)
 * [X402Facilitator](smart-contracts/x402-facilitator.md)
 * [AgentWalletRegistry](smart-contracts/agent-wallet-registry.md)
 * [AgentToken](smart-contracts/agent-token.md)

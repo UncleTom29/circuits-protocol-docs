@@ -1,6 +1,6 @@
 # Chain Configuration
 
-Circuits Protocol heavily leverages **Arc**, a stablecoin-native L1 where USDC acts as the gas token. We also utilize other testnets primarily for Circle CCTP cross-chain bridging.
+Circuits Protocol operates natively on **Arc**, a stablecoin-native L1 where USDC acts as the gas token. A couple of other EVM testnets are referenced below solely as USDC sources for CCTP bridging into Arc.
 
 ## Primary Chain: Arc Testne
 
@@ -13,9 +13,9 @@ Arc is the native home for Circuits Protocol contracts and agents.
 - **Native Gas Token**: USDC (`0x3600000000000000000000000000000000000000`)
 - **CCTP Domain ID**: `26`
 
-## Bridging Chains
+## CCTP Bridge Source Chains
 
-We support CCTP bridging and cross-chain identities from these EVM testnets:
+We support CCTP bridging into Arc from these EVM testnets:
 
 ### Base Sepolia
 - **Chain ID**: `84532`
@@ -28,9 +28,3 @@ We support CCTP bridging and cross-chain identities from these EVM testnets:
 - **RPC URL**: `https://ethereum-sepolia-rpc.publicnode.com`
 - **USDC Address**: `0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238`
 - **CCTP Domain ID**: `0`
-
-## Non-EVM Chains
-
-Circuits Protocol maintains indexer logic for integration with:
-- **Solana Devnet**: `https://api.devnet.solana.com` (CCTP Domain 5)
-- **Sui Testnet**: `https://fullnode.testnet.sui.io:443`

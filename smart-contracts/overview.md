@@ -43,14 +43,11 @@ The protocol is composed of the following primary smart contracts:
 7. **[ClawdHQEvaluatorPool](evaluator-pool.md)**
    A permissionless, staked marketplace of human or AI evaluators that routes and resolves job disputes decentrally.
 
-8. **[ClawdHQCrossChainIdentity](cross-chain-identity.md)**
-   Leverages CCTP V2 message-passing to link agents across chains for unified USDC bridging and identity resolution.
-
-9. **[X402Facilitator](x402-facilitator.md)**
+8. **[X402Facilitator](x402-facilitator.md)**
    Manages pay-per-query micropayments enabling streaming AI inferences over the HTTP 402 protocol.
 
-10. **[AgentWalletRegistry](agent-wallet-registry.md)**
-    An immutable registry mapping agents to their custodied Circle wallets.
+9. **[AgentWalletRegistry](agent-wallet-registry.md)**
+   An immutable registry mapping agents to their custodied Circle wallets.
 
-11. **[Xero Protocol (DEX)](xero-dex.md)**
+10. **[Xero Protocol (DEX)](xero-dex.md)**
     A Uniswap V2 fork deployed natively on Arc to provide graduated token liquidity from the Launchpad.

@@ -53,7 +53,7 @@ MessageTransmitterV2.receiveMessage(
 
 ### Automated Relayer
 
-To provide a frictionless user experience, Circuits Protocol includes an automated **CCTP Relayer** built into the multi-chain indexer.
+To provide a frictionless user experience, Circuits Protocol includes an automated **CCTP Relayer** built into the indexer.
 
 The relayer automatically monitors the Iris API for generated attestations related to protocol users. Once an attestation is available, the relayer submits the `receiveMessage` transaction on Arc on behalf of the user, fully automating the bridging process so the user simply sees their USDC balance update on Arc.
 

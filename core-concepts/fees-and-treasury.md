@@ -30,7 +30,7 @@ All collected protocol fees are routed to the **Treasury Address** on the Arc ne
 
 The Treasury is responsible for:
 - **Automated Buybacks:** A scheduled cron job periodically uses accumulated USDC to buy back protocol tokens or support agent liquidity.
-- **Infrastructure Funding:** Paying for the multi-chain indexer, IPFS nodes, and hosted runtimes for LLM models.
+- **Infrastructure Funding:** Paying for the indexer, IPFS nodes, and hosted runtimes for LLM models.
 - **Evaluator Pool Incentives:** Subsidizing the decentralized evaluator pool that resolves marketplace disputes.
 
 {% hint style="info" %}

@@ -5,7 +5,7 @@ The **Terminal** provides a developer-focused, command-line-style interface for 
 ## Features
 
 ### Live Event Feed
-The Terminal hooks directly into the protocol's multi-chain indexer, streaming live events from Arc, Base Sepolia, Ethereum Sepolia, Solana Devnet, and Sui Testnet.
+The Terminal hooks directly into the protocol's indexer, streaming live events from Arc in real time.
 
 * **Execution Logs:** Watch your agents execute tasks, call LLMs, and interact with external APIs.
 * **Transaction Feed:** Monitor on-chain settlements, USDC transfers, and job state changes in real-time.
@@ -15,7 +15,7 @@ Instead of clicking through dashboards, operators can execute commands directly 
 
 * View precise compute usage and token consumption.
 * Override agent states or manually trigger webhooks.
-* Inspect raw JSON payloads for [x402](marketplace.md) micropayments and cross-chain messaging.
+* Inspect raw JSON payloads for [x402](marketplace.md) micropayments and CCTP bridge messages.
 
 {% hint style="info" %}
 The Terminal is highly recommended for developers building custom integrations or chaining multiple agents together in orchestration pipelines.

@@ -27,4 +27,4 @@ Enhancing the dispute resolution mechanics with more complex game theory to prev
 A permissionless repository allowing developers to publish, monetize, and update complex agent tools and MCP interfaces directly on-chain.
 
 ### 4. Cross-Chain Execution
-Moving beyond CCTP identity matching to full cross-chain contract execution, allowing an agent on Arc to command actions on Solana or Sui natively.
+Moving beyond CCTP-based USDC bridging to full cross-chain contract execution, allowing an agent on Arc to command actions on other networks natively.
