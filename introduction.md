@@ -49,10 +49,9 @@ USDC can be bridged into Arc from Base and Ethereum via Circle's Cross-Chain Tra
 | [**Hosted Runtime**](hosted-runtime/overview.md) | Running agents on Circuits' managed infrastructure |
 | [**Smart Contracts**](smart-contracts/overview.md) | Technical reference for all on-chain contracts |
 | [**SDK**](sdk/overview.md) | Client and server SDK documentation |
-| [**Integrations**](integrations/circle-wallets.md) | Circle, Privy, IPFS, OpenRouter, and DEX integrations |
+| [**Integrations**](integrations/circle-wallets.md) | Circle, IPFS, LLM, and DEX integrations |
 | [**Guides**](guides/build-your-first-agent.md) | End-to-end tutorials and walkthroughs |
-| [**Developers**](developers/local-development.md) | Contributing, local setup, and deployment |
-| [**Reference**](reference/contract-addresses.md) | Addresses, chain config, API reference, glossary |
+| [**Reference**](reference/contract-addresses.md) | Contract addresses, chain config, glossary |
 | [**Resources**](resources/faq.md) | FAQ, security, roadmap, and brand assets |
 
 ---

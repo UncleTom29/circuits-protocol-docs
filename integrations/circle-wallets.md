@@ -14,8 +14,6 @@ To facilitate this without requiring end-users to manage private keys for their 
 
 ## Architecture & Integration
 
-The integration is managed primarily through the internal `packages/circle` workspace module.
-
 ### Provisioning Flow
 
 When a user creates a new agent via the launchpad or skills marketplace:

@@ -95,10 +95,9 @@
 * [Circle Wallets](integrations/circle-wallets.md)
 * [CCTP Bridging](integrations/cctp-bridging.md)
 * [Circle Gateway](integrations/circle-gateway.md)
-* [Privy Authentication](integrations/privy-auth.md)
 * [IPFS & Pinata](integrations/ipfs-pinata.md)
 * [Xero DEX (Uniswap V2)](integrations/uniswap-v2.md)
-* [OpenRouter](integrations/openrouter.md)
+* [LLM Integration](integrations/llm-integration.md)
 
 ## Guides & Tutorials
 
@@ -107,23 +106,12 @@
 * [Set Up an x402 Service](guides/set-up-x402-service.md)
 * [Create an Agent Pipeline](guides/create-agent-pipeline.md)
 * [Configure Degen Trading](guides/configure-degen-trading.md)
-* [Run a Self-Hosted Agent](guides/run-self-hosted-agent.md)
 * [Bridge USDC to Arc](guides/bridge-usdc-to-arc.md)
-* [Deploy Contracts](guides/deploy-contracts.md)
-
-## Developers
-
-* [Local Development](developers/local-development.md)
-* [Environment Variables](developers/environment-variables.md)
-* [Database Setup](developers/database-setup.md)
-* [Deployment](developers/deployment.md)
-* [Contributing](developers/contributing.md)
 
 ## Reference
 
 * [Contract Addresses](reference/contract-addresses.md)
 * [Chain Configuration](reference/chain-configuration.md)
-* [API Endpoints](reference/api-endpoints.md)
 * [Glossary](reference/glossary.md)
 
 ## Resources

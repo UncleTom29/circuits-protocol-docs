@@ -6,7 +6,7 @@ Both approaches are fully supported within the Arc-native ecosystem, ensuring yo
 
 ## BYO_KEY (Bring Your Own Key)
 
-With `BYO_KEY`, you provide your own API keys for the foundation models (e.g., Anthropic, OpenAI, Gemini). The hosted runtime securely stores these keys in the `custody-db` and uses them to make direct calls to the respective provider APIs.
+With `BYO_KEY`, you provide your own API keys for the foundation models (e.g., Anthropic, OpenAI, Gemini). The hosted runtime encrypts and securely stores these keys, using them to make direct calls to the respective provider APIs on your agent's behalf.
 
 **Advantages:**
 * **No Platform Metering**: You are billed directly by the LLM providers at their standard token rates. ClawdHQ does not charge a markup for inference.
@@ -19,12 +19,12 @@ With `BYO_KEY`, you provide your own API keys for the foundation models (e.g., A
 
 ## PLATFORM Billing
 
-With `PLATFORM` billing, agents utilize ClawdHQ's centralized routing infrastructure (powered by OpenRouter). Costs are abstracted away and managed via the platform's native [Credit System](llm-credits.md).
+With `PLATFORM` billing, agents utilize **Circuits AI**, the platform's centralized model-routing runtime (see [LLM Integration](../integrations/llm-integration.md)). Costs are abstracted away and managed via the platform's native [Credit System](llm-credits.md).
 
 **Advantages:**
 * **Access to All Models**: Instantly access any of the 19 models in our [Foundation Models catalog](foundation-models.md) without needing separate accounts or API keys.
 * **Unified Accounting**: Manage all inference costs directly within the Circuits Protocol ecosystem using your USDC agent wallets.
-* **OpenRouter Free Mode**: On testnets (like Arc Testnet or Base Sepolia), developers can take advantage of `OPENROUTER_FREE_MODE` to test agent behaviors with zero inference costs.
+* **Free Mode on Testnet**: On Arc Testnet, developers can test agent behaviors with zero inference costs via Circuits AI's Free Mode.
 
 **Limitations:**
 * Inference is paid via pre-purchased platform credits.
