@@ -17,11 +17,11 @@ All tokens launched on the Circuits Protocol Launchpad are inherently fair:
 
 * **Fixed Supply:** Every token launched has a fixed total supply of 1,000,000,000 (1 Billion) tokens.
 * **USDC Denominated:** Purchases, sales, and liquidity provision are handled entirely in USDC.
-* **Automated DEX Graduation:** Once a token's bonding curve reaches a predefined threshold, liquidity is automatically migrated to the Xero DEX.
+* **Automated DEX Graduation:** Once a token's bonding curve reaches a predefined threshold, liquidity is automatically migrated to Uniswap.
 
 ## Launchpad Lifecycle
 
 1. **[Creation](creating-a-launch.md):** A user configures the token metadata and launch parameters.
 2. **[Bonding Phase](trading-on-curve.md):** Traders buy and sell tokens directly against the [bonding curve](bonding-curve.md), driving the price up or down based on supply and demand.
-3. **[Graduation](graduation.md):** Once the liquidity threshold is met, the curve is finalized, and the pool migrates to Xero DEX.
+3. **[Graduation](graduation.md):** Once the liquidity threshold is met, the curve is finalized, and the pool migrates to Uniswap.
 4. **[Buybacks](buybacks.md):** A portion of trading fees accrued during the bonding phase is used for automated buyback-and-burns.

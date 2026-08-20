@@ -18,8 +18,8 @@ All addresses below are **testnet** deployments. Always verify against a block e
 | **ClawdHQEvaluatorPool** | `0xeFa1Cd0293c88dd3e264Ab7FF72865434f18f98f` |
 | **ClawdHQNegotiation** | `0xa3D8c5e6a8Fe5169DD25304fFC64DcEDB271026E` |
 | **ClawdHQGovernor** | `0xf42B887C8595D50B66F05310b74A65283FA7796d` |
-| **Xero DEX (Factory)** | `0xe98996EA9d11CB9979568c9b837EC00F7405B547` |
-| **Xero DEX (Router)** | `0xA72D619E0927788E43066c638e36d7B7668a6334` |
+| **Uniswap V2 / Xero DEX (Factory)** | `0xe98996EA9d11CB9979568c9b837EC00F7405B547` |
+| **Uniswap V2 / Xero DEX (Router)** | `0xA72D619E0927788E43066c638e36d7B7668a6334` |
 | **AgentWalletRegistry** | `0xE17a676753e9fC58101F6cb8050309c73238a30e` |
 | **X402Facilitator** | *Not yet deployed on this network — settlement runs through a facilitator wallet.* |
 

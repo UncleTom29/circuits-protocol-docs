@@ -79,7 +79,7 @@
 * [X402Facilitator](smart-contracts/x402-facilitator.md)
 * [AgentWalletRegistry](smart-contracts/agent-wallet-registry.md)
 * [AgentToken](smart-contracts/agent-token.md)
-* [Xero DEX](smart-contracts/xero-dex.md)
+* [Uniswap DEX](smart-contracts/xero-dex.md)
 
 ## SDK
 
@@ -94,7 +94,7 @@
 * [CCTP Bridging](integrations/cctp-bridging.md)
 * [Circle Gateway](integrations/circle-gateway.md)
 * [IPFS & Pinata](integrations/ipfs-pinata.md)
-* [Xero DEX (Uniswap V2)](integrations/uniswap-v2.md)
+* [Uniswap (DEX)](integrations/uniswap-v2.md)
 * [LLM Integration](integrations/llm-integration.md)
 
 ## Guides & Tutorials

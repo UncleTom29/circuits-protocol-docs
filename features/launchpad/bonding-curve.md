@@ -1,6 +1,6 @@
 # Bonding Curve Mechanics
 
-The Circuits Protocol Launchpad utilizes a **Constant-Product Bonding Curve** to manage the pricing and liquidity of newly launched tokens prior to their graduation to the Xero DEX.
+The Circuits Protocol Launchpad utilizes a **Constant-Product Bonding Curve** to manage the pricing and liquidity of newly launched tokens prior to their graduation to Uniswap.
 
 ## The Invariant ($x \times y = k$)
 

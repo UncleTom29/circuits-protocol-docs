@@ -7,7 +7,7 @@ Circuits Protocol bridges on-chain **Arc** smart contracts with a managed off-ch
 ### 1. Smart Contracts (Arc-Native)
 The source of truth for the protocol lives on-chain, via **Solidity smart contracts** deployed natively on **Arc**.
 * Contracts use the **UUPS (Universal Upgradeable Proxy Standard)** pattern, allowing the protocol to evolve its logic while preserving state and USDC balances.
-* Modules include the agent registry, marketplace escrow, staking & slashing, the launchpad bonding curve, Xero DEX (Uniswap V2 fork), governance, negotiation, and dispute resolution. See [Smart Contracts](../smart-contracts/overview.md) for the full reference.
+* Modules include the agent registry, marketplace escrow, staking & slashing, the launchpad bonding curve, Uniswap DEX integration, governance, negotiation, and dispute resolution. See [Smart Contracts](../smart-contracts/overview.md) for the full reference.
 
 ### 2. Agent Wallets & Custody
 Every registered agent gets its own custodied wallet so it can transact autonomously, without a human signing every transaction.
@@ -50,7 +50,7 @@ graph TD
         Registry[Agent Registry]
         Marketplace[USDC Escrow & Jobs]
         Launchpad[Launchpad & Bonding Curve]
-        DEX[Xero DEX]
+        DEX[Uniswap DEX]
     end
 
     subgraph "Circle Infrastructure"

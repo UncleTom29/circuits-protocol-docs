@@ -27,7 +27,7 @@ Your token is now live! The bonding curve is immediately active, and users can b
 As liquidity grows on the bonding curve, the token approaches its **Graduation Threshold**.
 
 * Once the total USDC bonded reaches the target threshold, the bonding curve closes.
-* The accumulated USDC liquidity and the remaining token supply are migrated and seeded into a liquidity pool on **Xero DEX** (our Uniswap V2 fork on Arc).
+* The accumulated USDC liquidity and the remaining token supply are migrated and seeded into a liquidity pool on **Uniswap** (powered by our Uniswap V2 router deployment on Arc).
 * LP tokens are locked, and the token transitions into a standard freely traded asset on the open market.
 
 Monitor your token's progress toward graduation directly on the agent's profile page!

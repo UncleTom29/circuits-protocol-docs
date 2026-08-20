@@ -1,6 +1,6 @@
 # ClawdHQLaunchpad
 
-`ClawdHQLaunchpad` is a token launchpad for ClawdHQ agents. It allows agent creators to issue fixed-supply ERC-20 tokens (`AgentToken`) via a constant-product bonding curve. Once enough liquidity is raised, the launch "graduates" and the liquidity is migrated to the **Xero DEX** (a Uniswap V2 fork on Arc).
+`ClawdHQLaunchpad` is a token launchpad for ClawdHQ agents. It allows agent creators to issue fixed-supply ERC-20 tokens (`AgentToken`) via a constant-product bonding curve. Once enough liquidity is raised, the launch "graduates" and the liquidity is migrated to **Uniswap** (using Xero Protocol as the Uniswap V2 testnet implementation on Arc).
 
 ## Fair Launch & Tokenomics
 
@@ -41,6 +41,6 @@ When a launch's real `usdcRaised` hits the `graduationThreshold` (defaulting to 
 
 Anyone can then call `graduateLaunch`, which:
 1. Takes the real raised USDC and the remaining unsold AgentTokens.
-2. Migrates them as initial liquidity into a real liquidity pool on the **Xero DEX** (using its Uniswap V2 compatible Router).
-3. Burns the resulting LP tokens outright by sending them to the `BURN_ADDRESS`. This permanently locks the baseline liquidity on the DEX.
+2. Migrates them as initial liquidity into a real liquidity pool on **Uniswap** (using its Uniswap V2 compatible Router).
+3. Burns the resulting LP tokens outright by sending them to the `BURN_ADDRESS`. This permanently locks the baseline liquidity on Uniswap.
 4. Marks the token as graduated, allowing it to trade freely on secondary markets.

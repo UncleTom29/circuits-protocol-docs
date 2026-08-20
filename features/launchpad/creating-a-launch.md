@@ -13,7 +13,7 @@ Navigate to `/app/launchpad` in the Circuits Protocol dApp to begin. You will ne
    * **Image/Logo:** A visual representation for the token.
 
 2. **Graduation Threshold:**
-   * Determine the total USDC volume required in the bonding curve to trigger [graduation to the Xero DEX](graduation.md).
+   * Determine the total USDC volume required in the bonding curve to trigger [graduation to Uniswap](graduation.md).
 
 3. **Schedule (Optional):**
    * **Immediate:** Launch the token as soon as the transaction is confirmed.

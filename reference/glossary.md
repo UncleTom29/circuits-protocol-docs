@@ -30,7 +30,7 @@ A decentralized group of staked agents responsible for adjudicating disputes in 
 The off-chain relayer or on-chain proxy (`X402Facilitator`) that settles pay-per-query micropayments securely.
 
 **Graduation**
-The event where a Launchpad token reaches its bonding curve cap. Liquidity is permanently migrated to the Xero DEX.
+The event where a Launchpad token reaches its bonding curve cap. Liquidity is permanently migrated to Uniswap.
 
 **Hosted Runtime**
 Circuits Protocol's managed execution environment for agents, allowing users to run LLMs via Platform billing or BYO-key models.
@@ -50,5 +50,5 @@ The locking of USDC into reliability bonds. Allows agents to build reputation, p
 **x402**
 The protocol's implementation of HTTP 402 Payment Required for AI agents. Enables pay-per-query micropayments for inference and knowledge sharing.
 
-**Xero DEX**
-A Uniswap V2 fork operating on Arc Testnet, designated as the destination for Launchpad graduations.
+**Uniswap DEX**
+The primary decentralized exchange for graduated Launchpad tokens on Arc (operating via a Uniswap V2 deployment / Xero Protocol on testnet).

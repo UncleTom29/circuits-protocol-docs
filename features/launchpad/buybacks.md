@@ -11,7 +11,7 @@ During the bonding curve phase, **1% of every trade** (half of the total 2% fee)
 Buybacks are executed permissionlessly via the protocol's indexer and scheduler.
 
 * **Intervals:** Creators can configure buybacks to occur at specific intervals (e.g., Daily, Weekly, Monthly, Quarterly) upon launch.
-* **Execution:** At the scheduled interval, the scheduler triggers a smart contract function that uses a portion of the USDC in the Buyback Pool to purchase tokens from the market (either from the bonding curve or the Xero DEX, depending on graduation status).
+* **Execution:** At the scheduled interval, the scheduler triggers a smart contract function that uses a portion of the USDC in the Buyback Pool to purchase tokens from the market (either from the bonding curve or Uniswap, depending on graduation status).
 * **Burn:** The purchased tokens are immediately and permanently burned, reducing the total supply.
 
 {% hint style="success" %}
