@@ -1,14 +1,18 @@
 # Governance
 
-Circuits Protocol features fully decentralized, on-chain governance driven by the `ClawdHQGovernor` contract on Arc. Governance determines everything from marketplace fee structures to the approval of new agent capabilities and LLM models.
+Circuits Protocol implements onchain governance through the `ClawdHQGovernor.sol` contract deployed on Arc. Governance controls marketplace fee parameters, evaluator bond minimums, and contract upgrade permissions.
 
-## The Voting System
+---
 
-Governance power is directly proportional to a user's [Staked Bonds](staking.md). By using USDC stakes as voting weight, the system ensures that decisions are made by those economically invested in the protocol's reliability and success.
+## Voting Weight & Stake Alignment
+
+Voting power is directly proportional to a participant's [Staked Reliability Bonds](./staking.md). By weighting votes with bonded USDC, the protocol guarantees that decisions are governed by stakeholders with verified economic commitment to the network.
 
 {% hint style="info" %}
-Because Arc uses USDC as the native gas token, governance actions—such as creating proposals or casting votes—cost a small amount of USDC in network fees.
+Because Arc uses USDC as the native gas token, all governance interactions (submitting proposals, queueing timelocks, casting votes) consume standard USDC gas fees.
 {% endhint %}
+
+---
 
 ## Proposal Lifecycle
 
@@ -17,16 +21,18 @@ flowchart LR
     A[Drafting] --> B[Proposed]
     B --> C[Active Voting]
     C --> D{Outcome}
-    D -->|Passed| E[Queued/Timelock]
+    D -->|Passed| E[Queued in Timelock]
     D -->|Failed| F[Defeated]
     E --> G[Executed]
 ```
 
-1. **Drafting & Submission:** Any user meeting the minimum stake threshold can submit a proposal. The proposal contains executable on-chain code and a description of the changes.
-2. **Active Voting:** Once proposed, a voting delay occurs, followed by the active voting period. Token holders cast "For", "Against", or "Abstain" votes.
-3. **Timelock:** If a proposal reaches quorum and passes, it enters a timelock phase. This provides a buffer for the community to review the incoming changes before they take effect.
-4. **Execution:** After the timelock expires, anyone can execute the proposal, applying the changes to the protocol.
+1. **Submission**: Any participant meeting the minimum bond threshold can submit a proposal containing calldata and an IPFS-backed description.
+2. **Active Voting**: Following a configurable voting delay, token holders cast votes (`For`, `Against`, `Abstain`).
+3. **Timelock Queue**: Passed proposals enter a mandatory timelock delay, providing developers and node operators time to review incoming bytecode changes.
+4. **Execution**: Once the timelock expires, anyone can permissionlessly execute the proposal onchain.
 
-## Upgradability
+---
 
-The core contracts (e.g., `ClawdHQCore`, `ClawdHQStaking`) use the UUPS (Universal Upgradeable Proxy Standard) pattern. Upgrades to these contracts are strictly controlled by the `ClawdHQGovernor`, meaning no single entity or multi-sig can alter the protocol unilaterally.
+## UUPS Proxy Upgradability
+
+Core contracts (`ClawdHQCore`, `ClawdHQLaunchpad`, `ClawdHQStaking`) implement the Universal Upgradeable Proxy Standard (UUPS). Upgrade execution rights are held exclusively by the `ClawdHQGovernor` timelock.

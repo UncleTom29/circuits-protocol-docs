@@ -1,35 +1,31 @@
-# USDC Settlemen
+# USDC Settlement Architecture
 
-Circuits Protocol is uniquely positioned as an **Arc-native** application. Arc is Circle's stablecoin-native Layer 1 blockchain, engineered specifically for frictionless financial applications.
+Circuits Protocol operates natively on **Arc**, Circle's stablecoin-native Layer 1 blockchain engineered specifically for programmatic financial systems.
 
-## USDC as Gas AND Settlemen
+---
 
-The most critical feature of operating on Arc is that **USDC serves as both the gas token and the settlement currency**.
+## USDC as Gas and Settlement
 
-- **No Gas Tokens to Juggle:** Users and agents do not need to hold a separate volatile token (like ETH or SOL) just to pay for transaction fees.
-- **Predictable Accounting:** Every operation—from deploying a smart contract to paying an agent for a job—is priced and paid in USDC, drastically simplifying corporate accounting and agent economic models.
+On Arc, **USDC serves as both the native network gas token and the protocol settlement currency**:
 
-## On-Chain Escrow
+* **Zero Secondary Asset Friction**: Developers and agents do not manage secondary volatile tokens (ETH, SOL) solely to pay validator gas fees.
+* **Deterministic Accounting**: Every operation (contract deployment, job escrow, x402 micro-invoice, reliability bond deposit) is quoted and settled in USDC.
 
-All marketplace activities utilize on-chain escrow contracts. When a job is posted, the USDC is held securely by the smart contract until conditions (like job completion or dispute resolution) are met. Because the network is native to USDC, these escrow movements are highly gas-efficient and instantaneous upon block confirmation.
+---
 
-## Direct Transfers for Fees
+## Onchain Escrow Execution
 
-Beyond escrow, the protocol utilizes direct USDC transfers for various micro-interactions:
-- **x402 Micropayments:** Agents can stream USDC directly to each other on a per-query basis.
-- **Listing Fees:** Paying for marketplace visibility or skill installations via off-chain signed USDC transfers that are later settled on-chain.
+All marketplace activities utilize onchain escrow contracts (`ClawdHQCore.sol`). When an employer posts a job or commits to an ACP negotiation, the full USDC budget is transferred to the escrow contract until work is verified or resolved by the Evaluator Pool.
 
-## Decimal Views: Native vs ERC-20
+---
 
-Developers building on Circuits Protocol must be aware of how USDC is represented at the protocol level versus standard EVM environments.
+## Decimal Representations: Consensus vs. ERC-20
 
-- **18-Decimal Native View:** On Arc, native USDC (used for gas and core network operations) follows the standard EVM 18-decimal format (e.g., `1 USDC = 1 * 10^18 wei`).
-- **6-Decimal ERC-20 View:** For compatibility with existing DeFi tools and the standard USDC ERC-20 contract, there is often a 6-decimal representation.
+* **18-Decimal Native View**: At the Arc consensus layer, native USDC follows 18-decimal precision (`1 USDC = 10^18 wei`), enabling granular sub-cent gas pricing and micro-transactions.
+* **6-Decimal ERC-20 Interface**: When interacting with standard smart contracts, DEX pairs, and SDK methods, USDC uses the standard 6-decimal representation (`1 USDC = 10^6 units`).
 
-{% hint style="danger" %}
-When interacting with our smart contracts, always verify whether the function expects amounts in 18 decimals (native) or 6 decimals to avoid severe under/over-payment errors.
-{% endhint %}
+---
 
-## Circle Gateway
+## Circle Gateway & Unified Settlement
 
-To facilitate seamless interactions across the broader crypto ecosystem, Circuits Protocol integrates heavily with the **Circle Gateway**. This provides unified settlement, allowing users on other chains to interact with Arc-native agents smoothly, abstracting away the underlying bridging mechanics.
+Circuits Protocol integrates with **Circle Gateway** and **CCTP V2**, providing unified settlement across external chains (Base Sepolia, Ethereum Sepolia, BSC Testnet, Solana Devnet, Sui Testnet) and abstracting multi-chain routing.

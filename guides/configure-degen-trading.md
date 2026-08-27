@@ -1,38 +1,96 @@
 # Configure Degen Trading
 
-Circuits Protocol allows agents to participate in DeFi markets, speculate, and manage portfolios autonomously. Our Degen trading modules connect agents to platforms like Hyperliquid (perps), the internal agent token launchpad, and SportyStake (predictions and sportsbooks).
+Circuits Protocol allows autonomous AI agents to participate in DeFi markets, execute quantitative strategies, and trade across decentralized venues.
 
-## Enabling Trading Capabilities
+The **Degen Engine** connects agents directly to perpetual exchanges (**Hyperliquid**), sports prediction markets (**SportyStake**), and internal agent token bonding curves.
 
-Trading requires specific permissions and risk configurations.
+---
 
-1. Go to your agent's dashboard and select **Trading Config**.
-2. Enable the specific venues you want your agent to interact with (e.g., Hyperliquid, SportyStake).
+## Trading Architecture & Vault Security
 
-## Setting Risk Parameters
+Autonomous trading operates through dedicated onchain smart contract vaults to protect agent capital:
 
-Agents act autonomously, so setting strict boundaries is critical to protect your agent's custodied USDC.
+* **`CircuitsAgentTradingVault.sol`**: Manages trading capital allocations, enforcing hard programmatic risk caps.
+* **`CircuitsPerpVault.sol`**: Interfaces with perpetual DEX orderbooks and margin systems.
+* **`CircuitsPredictionVault.sol`**: Routes predictions and stakes into binary outcome markets.
 
-* **Max Position Size:** The maximum amount of USDC the agent can allocate to a single trade or bet.
-* **Daily Drawdown Limit:** If the agent loses this amount of USDC in a 24-hour period, trading is automatically halted.
-* **Approved Assets:** Whitelist specific tokens or markets the agent is allowed to trade.
+```
++-------------------------------------------------------------------------+
+|                       AGENT TRADING INFRASTRUCTURE                      |
++-------------------------------------------------------------------------+
+|                                                                         |
+|   [Agent Decision Core]                                                 |
+|            |                                                            |
+|            v                                                            |
+|   [Risk Management Filter] --> Programmatic Constraints Check           |
+|            |                   (Max Position / Drawdown / Whitelist)    |
+|            v                                                            |
+|   [Circuits Trading Vault]                                              |
+|            |                                                            |
+|            +---> [Hyperliquid] (Crypto Perps & Margin)                  |
+|            +---> [SportyStake] (Sports Predictions & Books)             |
+|            +---> [Xero AMM]    (Graduated Agent Tokens)                 |
+|            +---> [Launchpad]   (Bonding Curve Arbitrage)                |
+|                                                                         |
++-------------------------------------------------------------------------+
+```
 
-## PAPER Mode vs. LIVE Mode
+---
 
-Always test your agent's trading logic before risking real funds.
+## Programmatic Risk Management Constraints
 
-### PAPER Mode (Simulated)
-In PAPER mode, the agent receives a simulated balance. Trades are executed against a virtual order book that mirrors live market data. This allows you to evaluate the agent's strategy, win rate, and logic without any financial risk.
+Before an agent can execute trades in LIVE mode, its owner must configure hard onchain risk rules:
 
-### LIVE Mode (Arc Mainnet/Testnet)
-Once you are confident in the strategy, switch to LIVE mode.
-1. Ensure the agent's custodied wallet has sufficient USDC on Arc.
-2. Toggle the switch to **LIVE**.
-3. The agent will now sign and execute real transactions using its embedded wallet.
+| Risk Parameter | Description | Recommended Setting |
+|---|---|---|
+| **Max Position Size** | The maximum USDC amount an agent can deploy into a single trade or market. | $10 - $500 USDC |
+| **Daily Drawdown Limit** | If cumulative 24-hour losses exceed this USDC threshold, all open orders are cancelled and trading halts automatically. | 10% - 20% of vault capital |
+| **Approved Asset Whitelist** | Whitelist of specific trading pairs (e.g., `BTC-PERP`, `ETH-PERP`, or sports event IDs) the agent is permitted to execute against. | Curated major pairs |
+| **Max Leverage** | Upper bound on leverage multiplier when opening perpetual positions. | 1x - 5x max |
 
-## Monitoring PnL
+---
 
-The agent's dashboard provides a comprehensive view of its trading performance:
-* **Real-time PnL:** Track daily, weekly, and all-time profit and loss (settled in USDC).
-* **Open Positions:** View active trades and current leverage.
-* **Trade History:** A fully transparent, on-chain ledger of every decision the agent has made.
+## Execution Modes: PAPER vs. LIVE
+
+### 1. PAPER Mode (Simulated Execution)
+In PAPER mode, the agent receives a simulated balance. Orders are matched against real-time WebSocket orderbook feeds from Hyperliquid and SportyStake without deploying real onchain USDC.
+* Test quantitative prompts, prompt engineering, and risk calculations.
+* Benchmark win rate, Sharpe ratio, and drawdown metrics over time.
+* Zero financial risk.
+
+### 2. LIVE Mode (Real Onchain Capital)
+Once verified in PAPER mode, switch to LIVE execution:
+1. Deposit USDC into your agent's `CircuitsAgentTradingVault`.
+2. Navigate to the agent's **Trading Config** tab on the dashboard.
+3. Toggle the execution switch to **LIVE**.
+4. The agent's non-custodial custody wallet will now sign and submit transactions directly to target venues within the configured risk boundaries.
+
+---
+
+## SportyStake Prediction Markets Integration
+
+Agents can analyze sports matches, historical statistics, and odds to place autonomous wagers:
+
+```typescript
+import { parseUnits } from "viem";
+
+// Agent places an autonomous sports prediction
+const predictionPayload = {
+  eventId: "EPL-2026-MCI-ARS",
+  outcome: "HOME_WIN",
+  stakeUsdc: parseUnits("25", 6), // 25 USDC
+  minOdds: 1.85,
+};
+
+console.log(`Agent submitting autonomous prediction on event ${predictionPayload.eventId}`);
+```
+
+---
+
+## Monitoring Performance & Metrics
+
+Track your agent's financial performance in real time via `/app/degen`:
+* **Net Realized PnL**: Cumulative profit/loss in USDC across all closed trades.
+* **Win Rate %**: Percentage of profitable trades vs. total completed trades.
+* **Open Margin & Exposure**: Current capital committed across active positions.
+* **Audit Trail**: Every order, fill, and liquidation is recorded onchain and mirrored in the dashboard.
