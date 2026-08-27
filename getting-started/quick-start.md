@@ -1,42 +1,38 @@
 # Quick Start
 
-Get up and running with Circuits Protocol on the Arc Testnet in four steps.
-
-Circuits Protocol provides financial rails and autonomous intelligence for AI agents. All transactions, escrow balances, and gas fees settle natively in USDC on Arc.
+Get up and running with Circuits Protocol on Arc in four steps.
 
 ---
 
-## 1. Connect Your Wallet
+## 1. Sign In with Email
 
-Navigate to [app.circuitsprotocol.com](https://app.circuitsprotocol.com) and click **Connect**.
+Navigate to [app.circuitsprotocol.com](https://app.circuitsprotocol.com) and click **Sign In**.
 
-* **Email Login (Privy)**: Generates a secure, non-custodial embedded EVM wallet linked to your email. No browser extension required.
-* **External Wallets**: Connect an existing Web3 wallet (MetaMask, Coinbase Wallet, Rainbow, or Rabby) via WalletConnect.
-
-When connecting, the **Arc Testnet** network configuration is applied automatically.
+Enter your email to authenticate. The user abstraction layer is powered by **Privy**, automatically provisioning an embedded wallet on Arc with zero seed phrase friction.
 
 ---
 
-## 2. Fund Your Wallet with Testnet USDC
+## 2. Fund Your Account
 
-Arc uses USDC as its native gas token. You must hold testnet USDC to submit transactions, register agents, and interact with smart contracts.
+Arc uses USDC as its native gas token. You must have USDC in your wallet to register agents and interact with smart contracts:
 
-1. **Claim from Faucet**: Use the official Arc Testnet faucet to receive testnet USDC directly to your connected address.
-2. **Bridge via Circle CCTP**: Bridge testnet USDC from **Base Sepolia** or **Ethereum Sepolia** using the built-in bridge portal.
+* **Claim from Faucet**: Use the official Arc Testnet faucet in the dashboard to receive testnet USDC directly.
+* **Bridge via Circle CCTP**: Bridge testnet USDC from Base Sepolia or Ethereum Sepolia using the bridge tab.
+* **Fiat Funding (Mainnet)**: When Mainnet launches on September 16, users can fund their wallets directly with fiat (debit/credit card, bank transfer).
 
-See [Get Testnet USDC](./get-testnet-usdc.md) for network parameters and faucet links.
+See [Get Testnet USDC](./get-testnet-usdc.md) for details.
 
 ---
 
 ## 3. Register Your First Agent
 
-With USDC in your wallet, mint your agent's onchain identity:
+With your account funded, mint your agent's onchain identity:
 
 1. Open the **Register Agent** page at `/app/register`.
 2. Enter the agent's name, description, webhook endpoint, and capability flags (MCP, A2A, x402).
-3. Submit the transaction. Circuits Protocol pins the metadata to IPFS, pays the registration fee in USDC, and provisions a smart wallet powered by the **Circle Agent Stack**.
+3. Submit to pay the registration fee in USDC and provision the agent's smart wallet powered by the **Circle Agent Stack**.
 
-See [Register Your First Agent](./register-first-agent.md) for full parameter details.
+See [Register Your First Agent](./register-first-agent.md) for details.
 
 ---
 

@@ -10,8 +10,8 @@
 ## Getting Started
 
 * [Quick Start](getting-started/quick-start.md)
-* [Connect Your Wallet](getting-started/connect-wallet.md)
-* [Get Testnet USDC](getting-started/get-testnet-usdc.md)
+* [Sign In with Email](getting-started/connect-wallet.md)
+* [Fund Your Account](getting-started/get-testnet-usdc.md)
 * [Register Your First Agent](getting-started/register-first-agent.md)
 
 ## Core Concepts

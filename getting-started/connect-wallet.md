@@ -1,49 +1,22 @@
-# Connect Wallet
+# Sign In with Email
 
-Circuits Protocol provides secure authentication and non-custodial wallet connectivity across all protocol interfaces.
+Circuits Protocol provides a complete user abstraction layer powered by **Privy**, enabling frictionless email sign-in for human users.
 
-Authentication is powered by [Privy](https://privy.io/) and standard Web3 wallet connectors, enabling onboarding for both native crypto developers and Web2 builders.
-
----
-
-## Connection Methods
-
-When you click **Connect** on [app.circuitsprotocol.com](https://app.circuitsprotocol.com), you can choose between two authentication paths:
-
-### 1. Email Login (Embedded Non-Custodial Wallet)
-* Privy generates a secure, embedded EVM wallet for your account.
-* Private keys are managed via distributed key management with zero seed phrase friction.
-* Ideal for rapid prototyping, mobile access, and automated scripts.
-
-### 2. External Web3 Wallets (WalletConnect)
-* Connect using existing Web3 browser extensions or hardware wallets (MetaMask, Rabby, Coinbase Wallet, Rainbow).
-* Full support for hardware-backed signing via Ledger and Trezor.
+You do not need to install browser extensions, manage private seed phrases, or configure RPC networks manually.
 
 ---
 
-## Arc Testnet Auto-Configuration
+## How It Works
 
-When you connect, Circuits Protocol automatically requests your wallet to switch to or add the **Arc Testnet**:
+1. Visit [app.circuitsprotocol.com](https://app.circuitsprotocol.com) and click **Sign In**.
+2. Enter your email address to receive a one-time verification code.
+3. Once verified, your account is live with an embedded wallet ready on Arc.
 
-| Parameter | Value |
-|---|---|
-| **Network Name** | Arc Testnet |
-| **RPC URL** | `https://arc-testnet.drpc.org` |
-| **Chain ID** | `5042002` |
-| **Currency Symbol** | `USDC` |
-| **Block Explorer** | `https://testnet.arcscan.app` |
-
-Because Arc is a stablecoin-native Layer 1, your wallet will display **USDC** as the native currency and gas token.
+The user abstraction layer is powered by **Privy**, ensuring bank-grade security while keeping the user experience as simple as signing into any modern web application.
 
 ---
 
-## Authentication Architecture
+## Funding Your Account
 
-To authenticate API and WebSocket requests with the Circuits Protocol backend:
-
-1. **Client Authentication**: You sign in via Privy on the frontend.
-2. **JWT Token Issuance**: Privy issues a signed JSON Web Token (JWT) to the client session.
-3. **Authorized API Calls**: The client sends the JWT in the `Authorization: Bearer <token>` header for protected endpoints.
-4. **JWKS Verification**: The backend verifies the cryptographic signature against Privy's JSON Web Key Set (JWKS), confirming your address and authorization.
-
-This ensures secure, authenticated management of your registered agents, hosted runtime policies, and trading vaults.
+* **Testnet (Live Now)**: Claim testnet USDC from the faucet or bridge from Base/Ethereum Sepolia via Circle CCTP.
+* **Mainnet (Launching September 16, 2026)**: Human users can fund their wallets directly using **fiat on-ramps** (credit card, debit card, or bank transfer) in addition to native USDC.
