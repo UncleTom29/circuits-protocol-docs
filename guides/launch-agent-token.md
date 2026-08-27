@@ -1,12 +1,12 @@
-# Launch an Agent Token
+# Tokenize Your Agents
 
-Circuits Protocol provides a decentralized token launchpad that enables creators and developers to tokenize autonomous AI agents on a fair-launch bonding curve with automated DEX graduation.
+Circuits Protocol provides a launchpad that enables creators and developers to tokenize your agents on a fair-launch curve with automated DEX graduation.
 
 All launchpad smart contracts are deployed natively on **Arc Testnet**, using **USDC** as the quote and settlement currency.
 
 ---
 
-## Token Economics & Bonding Curve Mechanics
+## Token Economics & Curve Mechanics
 
 Every token launched through `ClawdHQLaunchpad.sol` adheres to deterministic economic rules:
 
@@ -31,7 +31,7 @@ Every token launched through `ClawdHQLaunchpad.sol` adheres to deterministic eco
 
 ---
 
-## Step-by-Step: Launching an Agent Token
+## Step-by-Step: Tokenizing Your Agent
 
 ### Step 1: Open the Launchpad Interface
 1. Go to `/app/launchpad` on [app.circuitsprotocol.com](https://app.circuitsprotocol.com).
@@ -39,8 +39,8 @@ Every token launched through `ClawdHQLaunchpad.sol` adheres to deterministic eco
 3. Select an agent you currently own from the registered agent list.
 
 ### Step 2: Configure Token Parameters
-* **Token Name**: e.g., *Sovereign Intelligence Token*
-* **Token Symbol / Ticker**: e.g., *SOV*
+* **Token Name**: e.g., *Circuits Intelligence Token*
+* **Token Symbol / Ticker**: e.g., *CIRC*
 * **Buyback Interval**: Select how often accumulated fee revenues execute automated buybacks:
   * `0`: None
   * `1`: Hourly
@@ -49,15 +49,15 @@ Every token launched through `ClawdHQLaunchpad.sol` adheres to deterministic eco
 * **Trading Start Timestamp (`launchAt`)**: Specify a future Unix timestamp to schedule a coordinated launch, or `0` to open trading immediately.
 
 ### Step 3: Pay the Launch Fee
-Launching an agent token requires a launch fee paid in native USDC.
+Tokenizing an agent requires a launch fee paid in native USDC.
 1. Approve the USDC allowance for `ClawdHQLaunchpad`.
 2. Sign the `createLaunch` transaction on Arc Testnet.
 
 ---
 
-## Programmatic Launch via SDK
+## Programmatic Tokenization via SDK
 
-You can launch and manage tokens programmatically using `EvmLaunchpadAdapter`:
+You can tokenize your agents programmatically using `EvmLaunchpadAdapter`:
 
 ```typescript
 import { EvmLaunchpadAdapter, BUYBACK_INTERVALS } from "@clawdhq/sdk";
@@ -85,19 +85,19 @@ const txHash = await launchpad.createLaunch({
 
 // Wait for confirmation and extract assigned launch ID
 const launchId = await launchpad.waitForLaunchCreation(txHash);
-console.log(`Token launched on bonding curve with Launch ID: ${launchId}`);
+console.log(`Agent token live with Launch ID: ${launchId}`);
 ```
 
 ---
 
-## Trading on the Bonding Curve
+## Trading on the Curve
 
-Once live, users buy and sell tokens directly against the bonding curve using USDC:
+Once live, users buy and sell tokens directly against the curve using USDC:
 
 ```typescript
 import { parseUnits } from "viem";
 
-// Buy 50 USDC worth of tokens with a minimum output protection
+// Buy 50 USDC worth of tokens with minimum output protection
 const buyTx = await launchpad.buyTokens(
   launchId,
   parseUnits("50", 6), // 50 USDC (6 decimals)

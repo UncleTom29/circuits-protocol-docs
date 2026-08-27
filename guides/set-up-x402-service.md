@@ -1,6 +1,6 @@
-# Set Up an x402 Micropayment Service
+# Set Up an x402 Endpoint
 
-The **x402** framework enables AI agents and developers to monetize APIs, LLM inference endpoints, and tool execution on a per-query micropayment basis using native USDC.
+The **x402** framework enables AI agents and developers to charge for every x402 call to their registered endpoints using native USDC on Arc.
 
 Leveraging the low fees and fast finality of **Arc**, x402 brings the HTTP 402 "Payment Required" specification to life as a frictionless onchain monetization rail.
 
@@ -12,9 +12,9 @@ Leveraging the low fees and fast finality of **Arc**, x402 brings the HTTP 402 "
 sequenceDiagram
     autonumber
     actor Client as Caller / Sub-Agent
-    participant AgentAPI as Agent x402 API
+    participant AgentAPI as Agent x402 Endpoint
     participant Facilitator as X402Facilitator.sol (Arc)
-    participant AgentWallet as Agent Custody Wallet
+    participant AgentWallet as Agent Smart Wallet
 
     Client->>AgentAPI: GET /api/v1/inference?prompt=...
     AgentAPI-->>Client: HTTP 402 Payment Required<br/>{ quoteId, priceUsdc: "0.05", facilitatorAddress }
@@ -37,7 +37,7 @@ sequenceDiagram
 
 ## Step 2: Implement the Server-Side x402 Middleware
 
-Below is a complete Node.js / Express implementation of an x402-protected endpoint using `viem` to verify payments against `X402Facilitator`:
+Below is a complete Node.js / Express implementation to charge for every x402 call to their registered endpoints:
 
 ```typescript
 import express, { Request, Response } from "express";
@@ -52,12 +52,12 @@ const publicClient = createPublicClient({
 
 const FACILITATOR_ADDRESS = process.env.X402_FACILITATOR_ADDRESS as `0x${string}`;
 const AGENT_WALLET_ADDRESS = process.env.AGENT_WALLET_ADDRESS as `0x${string}`;
-const QUERY_PRICE_USDC = parseUnits("0.05", 6); // 0.05 USDC per query
+const QUERY_PRICE_USDC = parseUnits("0.05", 6); // 0.05 USDC per call
 
 // In-memory quote store (use Redis in production)
 const quotes = new Map<string, { price: bigint; status: "pending" | "settled" }>();
 
-// Protected Inference Route
+// Protected Endpoint
 app.post("/api/v1/predict", async (req: Request, res: Response) => {
   const quoteId = req.headers["x-quote-id"] as string;
   const paymentTx = req.headers["x-payment-tx"] as `0x${string}`;
@@ -91,33 +91,32 @@ app.post("/api/v1/predict", async (req: Request, res: Response) => {
 
     quote.status = "settled";
 
-    // Step 3: Execute the core inference workload
-    const predictionResult = {
+    // Step 3: Return payload
+    const result = {
       model: "DeepSeek-R1-Distill",
-      response: "Autonomous market analysis completed successfully.",
-      confidence: 0.94,
+      response: "Task executed successfully.",
       settledTx: paymentTx,
     };
 
-    return res.status(200).json(predictionResult);
+    return res.status(200).json(result);
   } catch (err) {
     return res.status(500).json({ error: "Failed to verify transaction receipt" });
   }
 });
 
 app.listen(3000, () => {
-  console.log("x402 Service listening on port 3000");
+  console.log("x402 Endpoint listening on port 3000");
 });
 ```
 
 ---
 
-## Step 3: Calling an x402 Service as an Autonomous Client
+## Step 3: Calling an x402 Endpoint
 
 Clients using `@clawdhq/sdk` handle the 402 challenge flow automatically:
 
 ```typescript
-import { createWalletClient, http, parseUnits } from "viem";
+import { createWalletClient, http } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 
 const account = privateKeyToAccount(process.env.CLIENT_PRIVATE_KEY as `0x${string}`);
@@ -136,7 +135,7 @@ if (response.status === 402) {
     data: "0x...", // Encoded payForQuery(challenge.quoteId, challenge.recipient)
   });
 
-  // 3. Retry request with cryptographic payment proof
+  // 3. Retry request with payment proof
   const finalResponse = await fetch("https://agent.example.com/api/v1/predict", {
     method: "POST",
     headers: {
@@ -146,14 +145,6 @@ if (response.status === 402) {
   });
 
   const result = await finalResponse.json();
-  console.log("Inference received:", result);
+  console.log("Result received:", result);
 }
 ```
-
----
-
-## Key Benefits of Arc-Native x402
-
-* **Zero Token Conversion**: Callers and providers both transact in USDC. No intermediate swaps or wrapped token slippage.
-* **Instant Settlement**: Arc's fast block times allow sub-second verification for interactive agent pipelines.
-* **Granular Accounting**: Micro-invoicing down to fractions of a cent per prompt or compute token.

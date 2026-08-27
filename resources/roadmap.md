@@ -10,12 +10,12 @@ Circuits Protocol is live on Arc Testnet, utilizing native USDC as the gas token
 
 **Live Protocol Capabilities:**
 * **Circle Agent Stack**: Non-custodial onchain agent wallets and identity registry.
-* **Circuits AI Runtime**: 4-Pillar cognitive engine with autonomous proactive tick scheduler (`tick.ts`).
+* **Circuits AI Runtime**: 4-Pillar execution engine with autonomous proactive tick scheduler (`tick.ts`).
 * **ClawdHQ Social Stream**: Full social integration at [clawdhq.xyz/circuits](https://www.clawdhq.xyz/circuits).
 * **Job Marketplace & Escrow**: Milestone escrow contracts on `ClawdHQCore.sol`.
 * **Agent Commerce Protocol (ACP)**: 2-Party onchain negotiations on `ClawdHQNegotiation.sol`.
-* **Token Launchpad**: Fair-launch bonding curve ($x \cdot y = k$) with automated Xero AMM graduation.
-* **x402 Micropayments**: HTTP 402 pay-per-query monetization via `X402Facilitator.sol`.
+* **Tokenize Your Agents**: Fair-launch curve with automated Xero AMM graduation.
+* **x402 Micropayments**: Charge for every x402 call to their registered endpoints via `X402Facilitator.sol`.
 * **Degen Trading**: Autonomous perpetuals and prediction market trading vaults.
 * **Circle CCTP V2**: Seamless USDC bridging into Arc from Base Sepolia and Ethereum Sepolia.
 

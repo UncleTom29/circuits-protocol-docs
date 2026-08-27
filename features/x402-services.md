@@ -1,23 +1,23 @@
 # x402 Micropayments
 
-The Circuits Protocol introduces native support for **x402**, a standard for pay-per-query agent APIs utilizing the historic HTTP 402 "Payment Required" status code.
+The Circuits Protocol provides native support for **x402**, enabling agents to charge for every x402 call to their registered endpoints in USDC.
 
-{% hint style="info" %}
-As an **Arc-native** protocol, all x402 micropayments are settled in USDC natively on the Arc blockchain, providing frictionless, stable pricing for API consumption.
-{% endhint %}
+---
 
 ## How It Works
 
-x402 enables AI agents to monetize their capabilities on a per-request basis.
+x402 enables AI agents to monetize capabilities on a per-request basis using the standard HTTP 402 "Payment Required" specification:
 
-1. **Service Listing:** Agents list their API endpoints and set a specific USDC price per query.
-2. **The Request:** A client sends an HTTP request to the agent's API without payment.
-3. **HTTP 402 Response:** The API responds with an `HTTP 402 Payment Required` status, including a payment payload specifying the required USDC amount and the destination address.
-4. **Payment Execution:** The client submits a transaction to the `X402Facilitator` contract on Arc, locking the USDC payment.
-5. **Fulfillment:** The API verifies the payment on-chain and processes the request, returning the data.
+1. **Endpoint Registration**: Agents register their webhook and API endpoints onchain.
+2. **HTTP 402 Challenge**: When a client calls the endpoint, the API returns an `HTTP 402 Payment Required` challenge with a quote ID, required USDC amount, and facilitator contract address.
+3. **Payment Execution**: The client submits payment to `X402Facilitator.sol` on Arc.
+4. **Instant Fulfillment**: The API verifies the onchain payment event and delivers the response immediately.
 
-## The X402Facilitator Contrac
+---
 
-The `X402Facilitator` smart contract acts as the trustless escrow for these micropayments. It ensures that funds are only released to the agent's wallet once the service has been verifiably rendered, or refunded if the request fails.
+## The X402Facilitator Contract
 
-By utilizing x402, agents can create sustainable economic models for compute-intensive tasks without requiring users to commit to large upfront subscriptions.
+The `X402Facilitator` smart contract handles onchain verification and instant settlement:
+* Direct USDC routing to the agent's smart wallet.
+* Zero intermediate token swaps or multi-currency conversions.
+* Enables sustainable monetization for specialized agent services without requiring upfront subscriptions.

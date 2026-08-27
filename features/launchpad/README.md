@@ -1,47 +1,35 @@
-# AI Agent Token Launchpad
+# Tokenize Your Agents: Launchpad
 
-The **Circuits Protocol Launchpad** provides fair-launch bonding curves for creating, funding, and trading agent-specific tokens on Arc.
-
-{% hint style="info" %}
-Circuits Protocol is **Arc-native**. All launchpad transactions, bonding curves, and DEX migrations are denominated and settled in **native USDC**.
-{% endhint %}
+The **Circuits Protocol Launchpad** allows you to tokenize your agents on fair-launch curves with automated DEX graduation on Arc.
 
 ---
 
-## 100% Fair Launch Principles
+## Fair Launch Principles
 
-Every token launched on Circuits Protocol adheres to strict fair-launch guarantees:
-* **Zero Presales & Pre-mines:** No private rounds, no team allocations, and no insider vesting schedules.
-* **100% Public Bonding Curve:** Every single token in circulation must be purchased from the public curve.
-* **Automated DEX Graduation:** When total funding hits the graduation threshold, liquidity automatically migrates to Uniswap V2 / Xero Router with permanently burned LP tokens.
+Every token launched on Circuits Protocol adheres to strict guarantees:
+* **Zero Presales**: No private rounds, no team pre-allocations, and no insider allocations.
+* **100% Public Supply**: 1,000,000,000 (1 Billion) tokens start entirely on the public curve.
+* **Automated DEX Graduation**: When the graduation cap is reached, liquidity automatically migrates to Xero AMM with permanently locked LP tokens.
+* **Scheduled Fee Buybacks**: Accumulated trading fees execute automated buybacks and burns.
 
 ---
 
-## Key Token Specifications
+## Token Specifications
 
 | Parameter | Specification |
-| :--- | :--- |
+|---|---|
 | **Total Supply** | 1,000,000,000 (1 Billion) tokens fixed |
-| **Settlement Currency** | Native USDC on Arc (`0x3600...0000`) |
-| **Pricing Invariant** | Constant-Product Bonding Curve ($x \times y = k$) |
-| **Fee Model** | 50% Treasury / 30% Creator Royalties / 20% Buyback & Burn |
-| **Graduation Target** | Automated migration upon reaching the reserve threshold |
+| **Settlement Currency** | Native USDC on Arc (`0x3600000000000000000000000000000000000000`) |
+| **Pricing Invariant** | Constant-Product Curve ($x \cdot y = k$) |
+| **Fee Model** | 2% trading fee with automated buyback pool allocation |
+| **Graduation Target** | Automated migration upon reaching reserve threshold |
 
 ---
 
 ## Launchpad Lifecycle
 
-```mermaid
-graph LR
-    A[Launch Creation] --> B[Bonding Curve Phase]
-    B --> C[Graduation Threshold Met]
-    C --> D[Uniswap V2 Migration]
-    B --> E[30-Day Buyback & Burn]
-    D --> E
-```
-
-1. **[Creating a Launch](creating-a-launch.md):** Configure token symbol, metadata, and link to the agent's on-chain ERC-721 identity.
-2. **[Trading on Curve](trading-on-curve.md):** Instant liquidity from block zero with deterministic pricing.
-3. **[Bonding Curve Mechanics](bonding-curve.md):** Algorithmic reserves and anti-snipe protection.
-4. **[DEX Graduation](graduation.md):** Automated Uniswap pool creation with locked LP liquidity.
-5. **[Automated Buybacks](buybacks.md):** 20% of fees pooled for scheduled market buys and burns.
+1. **[Creating a Launch](./creating-a-launch.md)**: Tokenize your agents with custom tickers, scheduled launch timestamps, and buyback frequencies.
+2. **[Trading on Curve](./trading-on-curve.md)**: Instant liquidity with deterministic pricing.
+3. **[Curve Mechanics](./bonding-curve.md)**: Virtual reserves and anti-snipe protection.
+4. **[DEX Graduation](./graduation.md)**: Automated Xero AMM pool creation with locked LP liquidity.
+5. **[Automated Buybacks](./buybacks.md)**: Permissionless buyback executions from fee pools.

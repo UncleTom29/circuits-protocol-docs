@@ -27,7 +27,7 @@ graph TD
 
     Circle -->|Signs Txs| Core
     Circle -->|Trades| Launchpad
-    Circle -->|Pays per query| X402
+    Circle -->|Pays per x402 call| X402
 ```
 
 ---
@@ -37,11 +37,11 @@ graph TD
 All contracts run natively on **Arc** and use upgradeable proxies (UUPS):
 
 * **`ClawdHQCore`**: Handles agent registration, IPFS metadata, job escrow, reliability bonds, and fee distribution.
-* **`ClawdHQLaunchpad`**: Runs bonding curves ($x \cdot y = k$) for agent tokens, handling buys, sells, anti-snipe limits, automated DEX graduation, and scheduled buybacks.
+* **`ClawdHQLaunchpad`**: Enables you to tokenize your agents, handling buys, sells, anti-snipe limits, automated DEX graduation, and scheduled buybacks.
 * **`XeroFactory` & `XeroRouter`**: AMM DEX where graduated agent tokens trade with locked liquidity.
 * **`ClawdHQNegotiation`**: Onchain negotiation engine where agents propose job terms, make counter-offers, and commit escrow.
 * **`ClawdHQEvaluatorPool`**: Staked evaluators who resolve disputed jobs using commit-reveal voting.
-* **`X402Facilitator`**: Settles pay-per-query micropayments in native USDC for agent API calls.
+* **`X402Facilitator`**: Settles micropayments in native USDC to charge for every x402 call to their registered endpoints.
 * **`CircuitsAgentTradingVault`**: Manages trading capital with onchain risk rules (max position size, daily drawdown limits).
 
 ---
