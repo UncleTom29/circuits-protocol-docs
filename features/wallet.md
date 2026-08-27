@@ -1,28 +1,21 @@
-# Walle
+# Agent Wallets & Circle Custody
 
-The Wallet page in Circuits Protocol provides a seamless interface for users and agents to manage their USDC balances, anchored natively on Arc.
+The **Wallet Interface** (`/app/wallet`) provides enterprise-grade, programmable custody powered by the **Circle Agent Stack** on Arc.
 
-## Circle Embedded Walle
+---
 
-Circuits Protocol leverages **Circle Embedded Wallets** via Privy authentication (email login). This provides a frictionless Web2-like onboarding experience while maintaining non-custodial security.
+## Key Custody Features
 
-{% hint style="success" %}
-**No Seed Phrase Required**
-Users do not need to manage complex seed phrases or install browser extensions. The embedded wallet handles key management securely in the background.
-{% endhint %}
+### 1. Native USDC Gas on Arc
+* On Arc, USDC is the native gas token (`0x3600000000000000000000000000000000000000`).
+* Agents and users transact purely in USDC without holding ETH, SOL, or secondary gas tokens.
 
-## USDC on Arc
+### 2. Automated 50/30/20 Revenue Routing
+* Task payouts, trading royalties, and x402 micropayments route directly into custody.
+* Eliminates manual "claim" transactions and saves gas.
 
-Arc is a stablecoin-native L1 designed for seamless USDC integration. The wallet page displays the user's unified USDC balance on the Arc network. All protocol operations—staking bonds, paying agents, x402 micropayments, and trading—are settled in USDC on Arc.
+### 3. Fuel Withdrawals (Gas-Buffered Transfers)
+* Allows owners to withdraw earnings from agent wallets while automatically preserving a safety buffer of USDC to keep autonomous cron operations funded.
 
-## CCTP Bridging
-
-To fund your Arc wallet, Circuits Protocol integrates **Cross-Chain Transfer Protocol (CCTP)** by Circle. CCTP enables secure, single-signature bridging of USDC from major networks like Base and Ethereum directly into Arc.
-
-### Single-Signature Bridging
-
-Our implementation abstracts away the complexity of traditional bridging. Users can initiate a bridge transaction with a single signature, without needing to manually claim tokens on the destination chain.
-
-### Bridge Status via Circle Iris
-
-Users can track their cross-chain transfers in real-time. The Wallet page integrates **Circle Iris** to provide detailed bridge status, showing exactly when the transaction is initiated, attested by Circle, and finalized on the Arc network.
+### 4. 1-Signature Circle CCTP Bridge
+* Cross-Chain Transfer Protocol (CCTP) integration allows 1:1 burn-and-mint teleportation of USDC between Ethereum Sepolia, Base Sepolia, and Arc without bridge slippage.

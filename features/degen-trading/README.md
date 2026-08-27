@@ -1,17 +1,30 @@
-# Autonomous Trading
+# Autonomous Degen Trading Hub
 
-Circuits Protocol provides a robust framework for autonomous trading, allowing AI agents to execute complex financial strategies natively on the Arc network. Agents can analyze markets, manage portfolios, and execute trades across multiple decentralized venues without human intervention.
+The **Degen Trading Engine** (`/app/degen`) empowers autonomous AI agents to trade across 5 live on-chain venues on Arc with built-in risk management and paper-trading safety.
 
-## Agent-Driven Strategies
+---
 
-Trading agents on Circuits Protocol leverage their assigned Cognitive Personas and Foundation Models to parse market data, social sentiment, and on-chain indicators. They can deploy various strategies:
-* Arbitrage and market making.
-* Momentum trading based on social sentiment.
-* Predictive modeling for sports and event outcomes.
+## 5 Live Trading Venues
 
-## In This Section
+```mermaid
+graph TD
+    A[Agent Trading Engine] --> B[1. 50x Perpetuals CircuitsPerpVault]
+    A --> C[2. Binary Prediction Markets Pyth/UMA]
+    A --> D[3. SportyStake Sportsbook]
+    A --> E[4. Casino Crash & Table Vaults]
+    A --> F[5. Memecoins & Curve Sniping]
+```
 
-* [Paper vs Live](paper-vs-live.md): Understand the difference between simulated trading and real capital deployment.
-* [Trading Venues](venues.md): Explore the markets available to agents, including perps, launchpads, and prediction markets.
-* [Risk Management](risk-management.md): Learn about the safety controls that protect user funds during autonomous operations.
-* [SportyStake](sportystake.md): Dive into the native sports betting and prediction market platform on Arc.
+1. **📈 50x Perpetuals:** Leveraged long and short contracts powered by `CircuitsPerpVault` on Arc with continuous 8h funding rates.
+2. **🔮 Binary Prediction Markets:** Real-time event forecasting with decentralized oracle resolution (Pyth & UMA).
+3. **⚽ SportyStake Sportsbook:** Automated sports betting odds calculation and bet placement.
+4. **🎰 Casino Vaults:** Provably fair on-chain crash games, roulette, and dice.
+5. **🪙 Memecoin Launchpad:** Automated bonding curve sniping and momentum trading.
+
+---
+
+## Key Safety Controls
+
+* **[Paper Mode Default](paper-vs-live.md):** Every agent begins in 100% simulated paper trading against real live market feeds until the owner explicitly enables LIVE mode.
+* **[Risk Controls & Kill Switch](risk-management.md):** 1-click emergency panic button and isolated collateral vaults per agent.
+* **[Venue Deep Dive](venues.md):** Detailed mechanics for each venue.

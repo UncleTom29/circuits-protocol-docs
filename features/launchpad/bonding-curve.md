@@ -1,36 +1,47 @@
 # Bonding Curve Mechanics
 
-The Circuits Protocol Launchpad utilizes a **Constant-Product Bonding Curve** to manage the pricing and liquidity of newly launched tokens prior to their graduation to Uniswap.
+The Circuits Protocol Launchpad utilizes a **Constant-Product Bonding Curve** ($x \times y = k$) to govern token pricing and guarantee continuous liquidity prior to Uniswap graduation.
+
+---
 
 ## The Invariant ($x \times y = k$)
 
-Our bonding curve is based on the standard AMM invariant formula:
+The curve is defined by the standard automated market maker invariant:
 
 $$ x \times y = k $$
 
 Where:
-* $x$ = Virtual USDC Reserve
-* $y$ = Real Token Reserve
-* $k$ = The Constant Produc
+* **$x$** = Virtual USDC Reserve
+* **$y$** = Real Token Reserve (1,000,000,000 fixed supply)
+* **$k$** = Constant Product
 
-At launch, the pool is initialized with a **Virtual USDC Reserve** and the entire supply of **Real Tokens** (1 Billion). The virtual reserve establishes the starting price without requiring the creator to deposit upfront USDC liquidity.
+At deployment, the pool is initialized with a **Virtual USDC Reserve** and the total supply of **Real Tokens**. The virtual reserve sets the initial floor price without requiring the creator to supply upfront capital.
 
-## Price Discovery
+---
 
-The price of a token is determined by the ratio of the reserves. As users buy tokens, they add real USDC to the reserve and remove real tokens, increasing the price. Conversely, selling removes USDC and adds tokens, decreasing the price.
+## Price Discovery & Spot Price
 
-**Spot Price Formula:**
+The spot price of a token is the ratio of the virtual USDC reserve to the remaining token reserve:
+
 $$ P = \frac{x}{y} $$
 
-## Fee Structure
+* **Buying:** Adds USDC to the reserve and removes tokens, moving the price up along the curve.
+* **Selling:** Returns tokens to the curve and withdraws USDC, moving the price down.
 
-To support the ecosystem and the token creator, fees are applied to trades on the bonding curve.
+---
 
-* **Base Trade Fee:** 2% on every transaction.
-  * **1%** goes to the Token Creator.
-  * **1%** is allocated to the [Automated Buyback Pool](buybacks.md).
+## Fee Structure (50/30/20)
 
-{% hint style="warning" %}
-**Anti-Snipe Fee**
-To protect against bot manipulation during the highly volatile initial launch block, an **Anti-Snipe Fee of 20%** is applied to early buys. This fee rapidly decays over the first few blocks, reverting to the standard 2% fee. The extra revenue generated is directed to the buyback pool.
-{% endhint %}
+Every trade on the bonding curve incurs a **2% transaction fee**, distributed as follows:
+* **50% (1.0% of trade):** Protocol Treasury & Liquidity Reserve.
+* **30% (0.6% of trade):** Creator Royalties, paid directly to the agent owner's wallet.
+* **20% (0.4% of trade):** Monthly Buyback & Burn Pool.
+
+---
+
+## Anti-Snipe Protection
+
+To protect retail participants and prevent MEV bot manipulation on block zero:
+* An **Anti-Snipe Fee of up to 20%** is applied during the initial launch blocks.
+* This fee decays exponentially over a short block window back to the standard 2% fee.
+* All excess anti-snipe proceeds are routed directly into the token's buyback contract.

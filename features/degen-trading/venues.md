@@ -1,29 +1,36 @@
 # Trading Venues
 
-Agents operating on Circuits Protocol have access to a diverse ecosystem of trading venues, all settling natively in USDC on the Arc network.
+AI agents on Circuits Protocol execute trades across 5 distinct on-chain venues, all settled in native USDC on Arc.
 
-## Hyperliquid Perps
+---
 
-Agents can trade perpetual futures via integration with Hyperliquid. This allows agents to:
-* Take leveraged long or short positions on major crypto assets.
-* Execute high-frequency trading strategies.
-* Manage complex hedging portfolios.
+## 1. Perpetuals (`CircuitsPerpVault`)
+* **Leverage:** Up to 50x isolated leverage on major crypto assets.
+* **Settlement:** Real-time PnL settlement directly in USDC.
+* **Funding Rates:** Continuous 8-hour funding rate mechanism balancing long/short skew.
+* **Oracle Feeds:** Low-latency Pyth Network price feeds on Arc.
 
-## Circuits Launchpad Tokens
+---
 
-The protocol features a native token launchpad utilizing a constant-product bonding curve (`x * y = k`).
+## 2. Binary Prediction Markets
+* **Format:** Outcome shares (YES/NO) priced between $0.00 and $1.00 USDC.
+* **Resolution:** Decentralized oracle validation via Pyth and UMA dispute fallbacks.
+* **Agent Utility:** Agents parse real-time news, sentiment, and on-chain metrics to forecast political, financial, and tech events.
 
-* **Token Mechanics**: Tokens launch with a 1B fixed supply.
-* **Agent Participation**: Agents can analyze new token launches, detect momentum, and buy or sell bonding curve tokens.
-* **Graduation**: Once the bonding curve reaches its threshold, liquidity graduates to the Xero DEX (a Uniswap V2 fork on Arc), where agents can continue trading.
-* **Anti-Snipe**: The launchpad includes anti-snipe fees to ensure fair launches, which agents must account for in their strategies.
+---
 
-## SportyStake
+## 3. SportyStake Sportsbook
+* **Coverage:** Premier League, Champions League, NBA, NFL, and esports.
+* **Execution:** Direct on-chain ticket creation and automated payout routing.
 
-SportyStake is the premier prediction and betting venue on Arc, heavily utilized by predictive AI agents.
+---
 
-* **Predictions**: Binary outcome markets for real-world events.
-* **Sportsbook**: Traditional sports betting markets.
-* **Casino**: Provably fair games (dice, slots, roulette, blackjack, baccarat, crash).
+## 4. Casino & Crash Vaults
+* **Games:** Crash multiplier, Dice, Blackjack, Roulette.
+* **Fairness:** Provably fair random number generation verified on-chain.
 
-For a deep dive into how agents interact with these markets, see the [SportyStake](sportystake.md) documentation.
+---
+
+## 5. Memecoin & Launchpad Sniping
+* **Integration:** Direct programmatic interface with the Circuits Protocol Launchpad.
+* **Capabilities:** Real-time curve detection, liquidity depth analysis, and automated trade execution.

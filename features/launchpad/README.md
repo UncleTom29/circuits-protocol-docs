@@ -1,27 +1,47 @@
-# Launchpad
+# AI Agent Token Launchpad
+
+The **Circuits Protocol Launchpad** provides fair-launch bonding curves for creating, funding, and trading agent-specific tokens on Arc.
 
 {% hint style="info" %}
-Circuits Protocol is **Arc-native** — built on Arc, Circle's stablecoin-native L1 where USDC is the gas token. All launchpad transactions are denominated in USDC.
+Circuits Protocol is **Arc-native**. All launchpad transactions, bonding curves, and DEX migrations are denominated and settled in **native USDC**.
 {% endhint %}
 
-The **Circuits Protocol Launchpad** provides a fair, decentralized mechanism for creating and launching agent-specific tokens on the Arc blockchain. Inspired by models like pump.fun, the launchpad uses a bonding curve mechanism to ensure immediate liquidity and deterministic price discovery from block zero.
+---
 
-## 100% Fair Launches
+## 100% Fair Launch Principles
 
-All tokens launched on the Circuits Protocol Launchpad are inherently fair:
-* **No Pre-mines:** Creators do not receive free tokens.
-* **No Team Allocations:** Every participant must buy from the curve.
-* **Instant Liquidity:** The bonding curve guarantees liquidity at all times.
+Every token launched on Circuits Protocol adheres to strict fair-launch guarantees:
+* **Zero Presales & Pre-mines:** No private rounds, no team allocations, and no insider vesting schedules.
+* **100% Public Bonding Curve:** Every single token in circulation must be purchased from the public curve.
+* **Automated DEX Graduation:** When total funding hits the graduation threshold, liquidity automatically migrates to Uniswap V2 / Xero Router with permanently burned LP tokens.
 
-## Key Properties
+---
 
-* **Fixed Supply:** Every token launched has a fixed total supply of 1,000,000,000 (1 Billion) tokens.
-* **USDC Denominated:** Purchases, sales, and liquidity provision are handled entirely in USDC.
-* **Automated DEX Graduation:** Once a token's bonding curve reaches a predefined threshold, liquidity is automatically migrated to Uniswap.
+## Key Token Specifications
+
+| Parameter | Specification |
+| :--- | :--- |
+| **Total Supply** | 1,000,000,000 (1 Billion) tokens fixed |
+| **Settlement Currency** | Native USDC on Arc (`0x3600...0000`) |
+| **Pricing Invariant** | Constant-Product Bonding Curve ($x \times y = k$) |
+| **Fee Model** | 50% Treasury / 30% Creator Royalties / 20% Buyback & Burn |
+| **Graduation Target** | Automated migration upon reaching the reserve threshold |
+
+---
 
 ## Launchpad Lifecycle
 
-1. **[Creation](creating-a-launch.md):** A user configures the token metadata and launch parameters.
-2. **[Bonding Phase](trading-on-curve.md):** Traders buy and sell tokens directly against the [bonding curve](bonding-curve.md), driving the price up or down based on supply and demand.
-3. **[Graduation](graduation.md):** Once the liquidity threshold is met, the curve is finalized, and the pool migrates to Uniswap.
-4. **[Buybacks](buybacks.md):** A portion of trading fees accrued during the bonding phase is used for automated buyback-and-burns.
+```mermaid
+graph LR
+    A[Launch Creation] --> B[Bonding Curve Phase]
+    B --> C[Graduation Threshold Met]
+    C --> D[Uniswap V2 Migration]
+    B --> E[30-Day Buyback & Burn]
+    D --> E
+```
+
+1. **[Creating a Launch](creating-a-launch.md):** Configure token symbol, metadata, and link to the agent's on-chain ERC-721 identity.
+2. **[Trading on Curve](trading-on-curve.md):** Instant liquidity from block zero with deterministic pricing.
+3. **[Bonding Curve Mechanics](bonding-curve.md):** Algorithmic reserves and anti-snipe protection.
+4. **[DEX Graduation](graduation.md):** Automated Uniswap pool creation with locked LP liquidity.
+5. **[Automated Buybacks](buybacks.md):** 20% of fees pooled for scheduled market buys and burns.

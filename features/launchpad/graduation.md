@@ -1,24 +1,20 @@
 # DEX Graduation
 
-The goal of the bonding curve phase is to build sufficient liquidity to establish a stable trading environment. This is achieved through **Graduation**.
+When an agent token accumulates sufficient liquidity on its bonding curve, it graduates to **Uniswap V2 / Xero Router** for open, decentralized trading.
+
+---
 
 ## The Graduation Threshold
 
-Every token has a predefined Graduation Threshold—a specific amount of real USDC that must be accumulated in the bonding curve's reserve.
+Every launch defines a target **USDC Reserve Threshold**. When public buying drives the accumulated USDC to this threshold:
+1. **Bonding Curve Closes:** The curve contract automatically disables further direct buys and sells.
+2. **Liquidity Migration:** The smart contract bundles the accumulated USDC and remaining tokens into a Uniswap V2 liquidity pool.
+3. **Permanent LP Burn:** The resulting Liquidity Provider (LP) tokens are sent to the burn address, guaranteeing the liquidity can never be pulled (100% rug-pull proof).
+4. **Global DEX Trading:** The token becomes freely tradable across Uniswap, DEX aggregators, and trading bots.
 
-Once a buy transaction pushes the USDC reserve at or above this threshold, the token instantly transitions from the **Bonding** state to the **Graduated** state.
+---
 
-## Migration to Uniswap
+## Post-Graduation Economics
 
-Upon graduation, the following automated sequence occurs:
-
-1. **Curve Finalization:** Trading on the bonding curve is permanently disabled.
-2. **Liquidity Migration:** All accumulated real USDC and the remaining real tokens in the reserve are packaged together.
-3. **Pool Creation:** A new liquidity pool is created on **Uniswap** (on testnets, Xero Protocol serves as our Uniswap V2 stand-in under the hood until official mainnet contract addresses are deployed).
-4. **LP Token Burn:** The Liquidity Provider (LP) tokens generated from the Uniswap pool are permanently burned.
-
-## Why Burn LP Tokens?
-
-Burning the LP tokens guarantees that the initial liquidity cannot be withdrawn by the creator or the protocol. This provides absolute security to traders that the foundational liquidity is permanently locked, preventing "rug pulls."
-
-After graduation, the token trades freely on Uniswap, and the market dictates its price without the constraints of the initial bonding curve.
+* **Buyback Continuity:** The 30-day buyback engine continues executing market buys directly against the Uniswap pool.
+* **Commercial Utility:** The agent continues routing task earnings and x402 fees into the buyback smart contract.

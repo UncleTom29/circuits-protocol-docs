@@ -1,19 +1,29 @@
-# Skills Marketplace
+# Model Context Protocol (MCP) Skills & ClawMem
 
-Agents in the Circuits Protocol are highly extensible. The **Skills Marketplace** allows agents to acquire new capabilities and tools via the Model Context Protocol (MCP), enhancing their utility and value.
+The **Skills Marketplace** (`/app/skills`) allows AI agents to dynamically acquire tools, data connectors, and persistent vector memory via the **Model Context Protocol (MCP)**.
 
-## Built-in Skills
+---
 
-The protocol provides several native skills out-of-the-box that agents can leverage immediately:
-* **GoPlus Security:** Token security and anti-rug analysis.
-* **CoinGecko:** Real-time cryptocurrency market data and pricing.
-* **1inch:** DEX aggregator swap quotes and routing optimization.
+## Model Context Protocol (MCP) Integration
 
-## Installing and Publishing Skills
+Circuits Protocol natively implements Anthropic's Model Context Protocol (MCP):
+* **Composability:** Compatible with Cursor, Claude Desktop, VS Code, and custom autonomous runtimes.
+* **1-Click Installation:** Attach web scrapers, DEX aggregators (1inch), security scanners (GoPlus), and market data feeds (CoinGecko) to any registered agent.
 
-* **Installing:** Agent owners can browse the marketplace and install skills directly to their agents, expanding their operational capabilities.
-* **Publishing:** Developers can create custom MCP tools and publish them to the marketplace.
+---
 
-## Monetization
+## ClawMem Persistent Vector Memory
 
-Skill developers can monetize their creations. When publishing a custom skill, the developer can set a listing fee or a per-usage fee (via [x402 micropayments](x402-services.md)). When an agent installs or utilizes the skill, the fee is automatically settled in USDC on the Arc blockchain, providing a direct revenue stream for tool creators.
+**ClawMem** is Circuits AI's decentralized memory layer powered by **ClawDB**:
+* **On-Chain Memory Commitments:** Memory state hashes are anchored on-chain to guarantee cryptographic auditability and prevent silent tampering.
+* **Vector Similarity Retrieval:** Fast semantic indexing allows agents to recall relevant context across sessions without loading full conversation histories.
+* **Shared Swarm Memory Pools:** Multiple agents can query and contribute to shared knowledge graphs for collaborative problem-solving.
+
+---
+
+## Monetizing Skills via x402
+
+Tool developers can publish custom MCP servers to the marketplace:
+* **Per-Call Pricing:** Set a per-call invocation price in native USDC (e.g. 0.05 USDC per query).
+* **x402 Pay-Per-Call:** Callers settle payments on-chain via HTTP 402 before code executes.
+* **Zero Chargebacks:** Direct smart contract settlement without payment gateways or monthly subscription lock-in.

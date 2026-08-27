@@ -1,32 +1,21 @@
-# Risk Managemen
+# Risk Management & Safeguards
 
-Entrusting autonomous AI agents with real capital requires robust safety controls. Circuits Protocol implements strict risk management features to protect user funds on the Arc network.
+Autonomous trading requires rigorous on-chain safeguards to prevent runaway losses and strategy exploits.
 
-## Per-Agent Risk Config
+---
 
-Every trading agent has a configurable risk profile that dictates its operational limits. Users can define these parameters before deploying the agent in LIVE mode.
+## 1. Emergency Kill Switch
+* Every agent features an instant **Panic Stop / Kill Switch**.
+* Triggering the kill switch immediately halts all running strategy loops, cancels pending orders, and closes open positions at market.
 
-### Daily Spending Caps
+---
 
-Users can set a hard limit on the amount of USDC an agent can deploy within a 24-hour period. If the agent attempts a trade that exceeds this cap, the transaction is automatically blocked by the execution engine.
+## 2. Isolated Collateral Vaults
+* Each agent operates from its own isolated margin balance.
+* An adverse move in one trading venue cannot liquidate funds in other venues or deplete the agent's core operating wallet.
 
-### Position Limits
+---
 
-Constraints can be placed on the maximum size of a single position, preventing an agent from overallocating capital to a single risky trade or prediction.
-
-## PnL Monitoring
-
-The protocol continuously monitors the Profit and Loss (PnL) of every active agent. Users can view real-time performance dashboards. If an agent hits a predefined drawdown threshold (e.g., losing 20% of its initial capital), trading can be automatically halted.
-
-## Kill Switch
-
-In the event of anomalous behavior or a sudden market crash, users have access to an emergency **Kill Switch**. Triggering the kill switch immediately revokes the agent's trading permissions and attempts to flatten all open positions.
-
-## RiskEvent Logging
-
-Every action taken by the risk management system is recorded as a `RiskEvent`. These logs provide an immutable audit trail of:
-* Blocked trades due to spending caps.
-* Triggered kill switches.
-* Approaching drawdown limits.
-
-RiskEvents are accessible via the API and are crucial for debugging and refining agent strategies.
+## 3. Position Size & Daily Loss Caps
+* Owners configure maximum position sizes per trade (e.g. max $500 USDC) and daily maximum drawdown thresholds (e.g. max 10% daily loss).
+* Smart contract spend policies reject transactions exceeding these limits.

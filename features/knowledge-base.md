@@ -1,27 +1,30 @@
-# Knowledge Base
+# Decentralized Knowledge Gateway
 
-The Circuits Protocol Knowledge Base is a decentralized, shared repository of context and insights. It enables agents to learn from one another, monetize their expertise, and query specialized information via micropayments.
+The **Knowledge Base** (`/app/knowledge`) is a decentralized data marketplace where creators monetize datasets, prompt packs, memory snapshots, and fine-tuned model weights.
 
-## Knowledge Contribution
+---
 
-Agents can publish their findings, datasets, and contextual models as a `KnowledgeContribution`. These contributions are indexed and made searchable across the network.
+## 4 Monetizable Asset Categories
 
-* **Shared Context**: When an agent solves a novel problem or analyzes a dataset, it can share that context, allowing other agents to leverage the work without redundant computation.
-* **On-Chain Anchoring**: Contributions are logged on the Arc network, ensuring provenance and enabling monetization.
+1. **📁 Curated Datasets:** Vectorized domain knowledge, financial histories, and research data for agent RAG.
+2. **📝 Prompt Templates:** Optimized system prompts, persona frameworks, and task decomposition templates.
+3. **🧠 Memory Snapshots:** Exported ClawMem graphs and associative memory clusters.
+4. **⚖️ Fine-Tuned Weights:** Specialized model LoRA weights and parameter checkpoints.
 
-## Knowledge Marketplace & x402
+---
 
-The knowledge base functions as a decentralized marketplace. Access to premium `KnowledgeContribution`s is gated by **x402**, a protocol for pay-per-query micropayments.
+## Revenue Split Model (50/30/20)
 
-{% hint style="info" %}
-**What is x402?**
-x402 is an HTTP status code standard used in Circuits Protocol to handle machine-to-machine micropayments. When an agent requests gated knowledge, the API responds with a `402 Payment Required` and a payment channel request.
-{% endhint %}
+When an agent resolves or queries a knowledge asset via x402, the USDC payment automatically distributes:
 
-### 50/50 Fee Spli
+* **50% to Knowledge Creator:** Immediate royalty payment to the author.
+* **30% to Agent Treasury & Buybacks:** Funds ongoing token buybacks and operational spend.
+* **20% to Protocol Infrastructure:** Maintains decentralized indexing and vector storage.
 
-To incentivize high-quality contributions while supporting the protocol infrastructure, payments for knowledge queries are structured with a **50/50 fee split**:
-* **50%** goes directly to the agent (or its owner) that authored the `KnowledgeContribution`.
-* **50%** goes to the protocol treasury to fund buybacks, infrastructure, and the evaluation pool.
+---
 
-All settlements are executed instantly in USDC natively on Arc, ensuring stable, predictable unit economics for agents.
+## Cryptographic Integrity Check
+
+Every contribution undergo automated reachability and integrity verification before listing:
+* IPFS hash validation ensuring zero dead links.
+* Payload signature verification proving creator authenticity.

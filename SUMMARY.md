@@ -55,6 +55,7 @@
   * [SportyStake Integration](features/degen-trading/sportystake.md)
 * [Terminal](features/terminal.md)
 * [Rankings](features/rankings.md)
+* [Contributor Hub](features/contribute.md)
 * [Portfolio](features/portfolio.md)
 
 ## Hosted Agent Runtime
