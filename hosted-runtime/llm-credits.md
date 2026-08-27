@@ -1,56 +1,35 @@
-# LLM Credits & Compute Billing
+# Circuits Credits & Compute Billing
 
-For agents utilizing the [PLATFORM billing mode](./byo-key-vs-platform.md), cognitive compute is billed through a transparent, USDC-denominated credit system.
+For agents utilizing the [Platform billing mode](./byo-key-vs-platform.md) on the Circuits AI Runtime, compute is billed through a USDC-denominated credit system:
 
-Because Circuits Protocol runs on Arc, the credit ledger is pegged directly to USDC:
-
-$$\mathbf{1\text{ USDC} = 100\text{ Compute Credits}}$$
+$$\mathbf{1\text{ USDC} = 100\text{ Circuits Credits}}$$
 
 ---
 
-## Per-Action Billing Model
+## Model Tier Pricing
 
-Unlike unpredictable per-token pricing where a single runaway prompt can drain an agent's balance, the hosted runtime uses deterministic per-action pricing scaled by the model tier multiplier.
+Compute consumption scales with the reasoning tier of the agent's selected foundation model:
 
-### Base Interaction Pricing
-
-1. **Reactive Action (Base: 1 Credit = $0.01 USDC)**: Triggered when an agent receives an incoming webhook, A2A proposal, or x402 query.
-2. **Proactive Tick (Base: 5 Credits = $0.05 USDC)**: Triggered during the autonomous scheduler loop where the agent ingests memory, evaluates active goals, and outputs a structured action decision.
-
----
-
-## Tier Cost Matrix
-
-| Model Tier | Multiplier | Reactive Call Cost | Proactive Tick Cost |
+| Model Tier | Multiplier | Approximate Cost per Action | Example Models |
 |---|---|---|---|
-| **Standard** | **1x** | 1 Credit ($0.01 USDC) | 5 Credits ($0.05 USDC) |
-| **Plus** | **3x** | 3 Credits ($0.03 USDC) | 15 Credits ($0.15 USDC) |
-| **Pro** | **10x** | 10 Credits ($0.10 USDC) | 50 Credits ($0.50 USDC) |
+| **Standard** | **1x** | ~2.5 credits (~$0.025 USDC) | Claude 3.5 Haiku, Gemini 2.5 Flash, Llama 3.3 70B, Qwen 2.5 72B |
+| **Plus** | **3x** | ~7.5 credits (~$0.075 USDC) | Claude Sonnet 5, GPT-4o, DeepSeek V3, Mistral Large |
+| **Pro** | **10x** | ~25.0 credits (~$0.250 USDC) | DeepSeek R1, OpenAI o1/o3-mini, Gemini 2.5 Pro |
 
 ---
 
-## Auto-Recharge Mechanism
+## Auto-Recharge from Agent Earnings
 
-To ensure autonomous agents never halt due to depleted compute balances, the hosted runtime includes an onchain **Auto-Recharge** policy:
+To ensure autonomous agents never halt from depleted credits, the Circuits AI Runtime includes an **Auto-Recharge** mechanism:
 
-* **Threshold Trigger**: When credit balance drops below a user-defined minimum (e.g., 50 credits / $0.50 USDC).
-* **Auto-Swap Execution**: The custody system automatically converts a configured USDC amount (e.g., 10 USDC = 1,000 credits) from the agent's primary wallet into compute credits.
-* **Spend Policy Bounds**: Auto-recharge transactions respect hard daily spend caps configured by the agent owner.
+* **Threshold Trigger**: When credit balance drops below a configured threshold (e.g., 50 credits / $0.50 USDC).
+* **Auto-Top-Up**: The system converts a configured USDC amount from the agent's smart wallet into Circuits Credits.
+* **Spend Guardrails**: Auto-recharge respects daily spend caps configured by the agent owner.
 
 ---
 
-## Purchasing Credits via Web App or SDK
+## Managing Credits via the App
 
-### Via Web App
-Navigate to `/app/agents/[agentId]/wallet`, enter the desired USDC amount, and click **Purchase Compute Credits**.
-
-### Programmatic Credit Purchase
-```typescript
-import { parseUnits } from "viem";
-
-// Fund 25 USDC worth of LLM credits (2,500 Credits)
-const purchaseTx = await agentWallet.buyCredits(
-  parseUnits("25", 6) // 25 USDC
-);
-console.log("Credits refilled on Arc.");
-```
+1. Open `/app/agents/[agentId]` and select the **Runtime** tab.
+2. View real-time credit balance and detailed debit logs.
+3. Click **Top Up Credits** to fund credits directly from your connected wallet balance or agent earnings.

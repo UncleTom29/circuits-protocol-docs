@@ -1,6 +1,6 @@
-# Automated Buyback & Burn
+# Automated Token Buybacks
 
-Circuits Protocol features an autonomous buyback-and-burn engine that applies consistent buying pressure to agent tokens and permanently contracts circulating supply.
+Circuits Protocol includes a permissionless buyback-and-burn mechanism that uses accumulated trade fees to repurchase agent tokens and permanently burn them on Arc.
 
 ---
 
@@ -8,24 +8,30 @@ Circuits Protocol features an autonomous buyback-and-burn engine that applies co
 
 ```mermaid
 graph TD
-    A[Launchpad Trade Fees] --> D[Buyback Pool Contract]
-    B[Marketplace Task Revenue] --> D
-    C[x402 API Micropayments] --> D
-    D -->|Every 30 Days| E[Market Buy Tokens]
-    E --> F[Permanent Burn Address 0xdead]
+    A[Launchpad Trade Fees: 20% Share] --> D[buybackPoolUsdc in Contract]
+    D -->|Interval Reached: Daily / Weekly / Monthly| E[executeBuyback]
+    E --> F[Market Buy Tokens from Curve / AMM]
+    F --> G[Permanent Burn: 0xdead]
 ```
 
-1. **Revenue Accumulation:**
-   * **20% of Launchpad Trading Fees** are routed to the token's dedicated buyback contract.
-   * **Task Earnings & API Fees:** When an agent completes marketplace jobs or x402 queries, its commercial revenue contributes to treasury buybacks.
-2. **Automated Execution Schedule:**
-   * Buybacks execute automatically on a **30-day recurring cycle**.
-   * The scheduler invokes the smart contract to execute market purchases on the bonding curve (or on Uniswap post-graduation).
-3. **Permanent Supply Burn:**
-   * Purchased tokens are transferred immediately to the dead burn address (`0x000000000000000000000000000000000000dEaD`), permanently reducing circulating supply.
+1. **Fee Accumulation**:
+   * **20% of every trade fee** on the curve accumulates directly in the contract's `buybackPoolUsdc`.
+2. **Scheduled Cadence (`BuybackInterval`)**:
+   * Configured by the creator at launch: **Daily**, **Weekly**, or **Monthly**.
+   * The contract tracks `nextBuybackAt`.
+3. **Permissionless Execution**:
+   * Once `block.timestamp >= nextBuybackAt`, anyone can click **Execute Buyback** in the UI or call `executeBuyback(launchId)`.
+   * The protocol indexer also runs an automated scheduler to trigger due buybacks.
+4. **Permanent Token Burn**:
+   * The accumulated USDC is used to buy agent tokens from the curve, and the purchased tokens are sent immediately to `0x000000000000000000000000000000000000dEaD`.
 
 ---
 
-## Verifiable On-Chain Tracking
+## Checking Buybacks in the UI
 
-Every buyback transaction is logged on-chain. Users can inspect the cumulative tokens burned, total USDC deployed, and timestamp of the next scheduled buyback directly on the token's detail page.
+1. Open `/app/launchpad/[launchId]`.
+2. View the **Buyback Module**:
+   * **Pool Balance**: Accumulated USDC waiting to be deployed.
+   * **Next Buyback Countdown**: Time remaining until the next execution window opens.
+   * **Total Burned**: Cumulative tokens burned and total USDC spent on buybacks.
+3. If the timer has passed, the **Execute Buyback** button becomes active for any user to trigger.

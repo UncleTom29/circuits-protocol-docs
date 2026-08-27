@@ -1,6 +1,6 @@
 # Tokenize Your Agents
 
-Circuits Protocol provides a launchpad that enables creators and developers to tokenize your agents on a fair-launch curve with automated DEX graduation.
+Circuits Protocol provides a launchpad that enables creators and developers to tokenize your agents on a fair-launch curve with automated **Uniswap** graduation.
 
 All launchpad smart contracts are deployed natively on **Arc Testnet**, using **USDC** as the quote and settlement currency.
 
@@ -14,7 +14,7 @@ Every token launched through `ClawdHQLaunchpad.sol` adheres to deterministic eco
 * **Constant-Product Curve**: Pricing is determined by a constant-product formula ($x \cdot y = k$) with initial virtual USDC reserves providing instant liquidity without pre-sale capital.
 * **Anti-Snipe Mechanism**: An anti-snipe block window prevents automated MEV bots from front-running organic buyers during the initial launch phase.
 * **Trading Fee (2%)**: A 2% protocol fee is collected on all buys and sells. A designated portion is routed to the launch's **Buyback Pool**.
-* **Automated Buybacks**: Launch creators configure a scheduled buyback frequency (`None`, `Hourly`, `Daily`, `Weekly`). Anyone can permissionlessly trigger `executeBuyback` to repurchase and burn tokens from the curve using accumulated protocol fees.
+* **Automated Buybacks**: Launch creators configure a scheduled buyback frequency (`Daily`, `Weekly`, `Monthly`). Anyone can permissionlessly trigger `executeBuyback` to repurchase and burn tokens from the curve using accumulated protocol fees.
 
 ```
 +-------------------------------------------------------------------------+
@@ -24,7 +24,7 @@ Every token launched through `ClawdHQLaunchpad.sol` adheres to deterministic eco
 |  1. LAUNCH CREATION  -->  2. BONDING CURVE TRADING  -->  3. GRADUATION  |
 |  - 1B Fixed Supply        - Constant Product Formula    - Cap Hit ($USDC|
 |  - Set Buyback Period     - 2% Fee Accumulates Buybacks - Liquidity Migr|
-|  - Schedule Launch Time   - Permissionless Buyback Runs - Locked in Xero|
+|  - Schedule Launch Time   - Permissionless Buyback Runs - Locked in Unis|
 |                                                                         |
 +-------------------------------------------------------------------------+
 ```
@@ -42,10 +42,9 @@ Every token launched through `ClawdHQLaunchpad.sol` adheres to deterministic eco
 * **Token Name**: e.g., *Circuits Intelligence Token*
 * **Token Symbol / Ticker**: e.g., *CIRC*
 * **Buyback Interval**: Select how often accumulated fee revenues execute automated buybacks:
-  * `0`: None
-  * `1`: Hourly
-  * `2`: Daily
-  * `3`: Weekly
+  * **Daily**: Repurchases tokens once every 24 hours.
+  * **Weekly**: Repurchases tokens once every 7 days.
+  * **Monthly**: Repurchases tokens once every 30 days.
 * **Trading Start Timestamp (`launchAt`)**: Specify a future Unix timestamp to schedule a coordinated launch, or `0` to open trading immediately.
 
 ### Step 3: Pay the Launch Fee
@@ -114,10 +113,10 @@ const sellTx = await launchpad.sellTokens(
 
 ---
 
-## Automated AMM Graduation
+## Automated Uniswap Graduation
 
 When cumulative USDC raised on the curve hits the **Graduation Threshold**:
 1. The bonding curve closes to prevent further curve trades.
-2. The accumulated USDC liquidity and remaining uncirculated tokens are migrated directly into the **Xero AMM** (Uniswap V2-compatible router on Arc).
+2. The accumulated USDC liquidity and remaining uncirculated tokens are migrated directly into **Uniswap V2** on Arc.
 3. The resulting liquidity provider (LP) tokens are permanently locked in the contract, establishing a non-ruggable, perpetual secondary market.
-4. Secondary trading continues seamlessly on Xero AMM using standard `swapExactTokensForTokensSupportingFeeOnTransferTokens` routing.
+4. Secondary trading continues seamlessly on Uniswap using standard `swapExactTokensForTokensSupportingFeeOnTransferTokens` routing.

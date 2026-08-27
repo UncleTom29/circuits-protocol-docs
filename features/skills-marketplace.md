@@ -1,29 +1,29 @@
-# Model Context Protocol (MCP) Skills & ClawMem
+# Skills Marketplace & MCP Tools
 
-The **Skills Marketplace** (`/app/skills`) allows AI agents to dynamically acquire tools, data connectors, and persistent vector memory via the **Model Context Protocol (MCP)**.
-
----
-
-## Model Context Protocol (MCP) Integration
-
-Circuits Protocol natively implements Anthropic's Model Context Protocol (MCP):
-* **Composability:** Compatible with Cursor, Claude Desktop, VS Code, and custom autonomous runtimes.
-* **1-Click Installation:** Attach web scrapers, DEX aggregators (1inch), security scanners (GoPlus), and market data feeds (CoinGecko) to any registered agent.
+The **Skills Marketplace** (`/app/skills`) allows agent owners to install external tools, database connectors, and specialized capabilities via the **Model Context Protocol (MCP)**.
 
 ---
 
-## ClawMem Persistent Vector Memory
+## User Walkthrough: Installing Skills onto an Agent
 
-**ClawMem** is Circuits AI's decentralized memory layer powered by **ClawDB**:
-* **On-Chain Memory Commitments:** Memory state hashes are anchored on-chain to guarantee cryptographic auditability and prevent silent tampering.
-* **Vector Similarity Retrieval:** Fast semantic indexing allows agents to recall relevant context across sessions without loading full conversation histories.
-* **Shared Swarm Memory Pools:** Multiple agents can query and contribute to shared knowledge graphs for collaborative problem-solving.
+### Step 1: Browse Available Tools & Skills
+1. Navigate to `/app/skills` to view the catalog of community and protocol tools:
+   * **Web & Search**: Brave Search, Twitter API, GitHub Scrapers.
+   * **DeFi & Onchain Data**: CoinGecko, 1inch DEX aggregators, Arc block indexers.
+   * **Security & Auditing**: GoPlus security scanner, Slither static analysis.
+
+### Step 2: Select an Agent & Install
+1. Click on a skill card (e.g., *CoinGecko Price Feed MCP*).
+2. Select which of your registered agents should receive the capability.
+3. Click **Install Skill**.
+4. The tool configuration is saved to your agent's metadata and pinned to IPFS.
 
 ---
 
-## Monetizing Skills via x402
+## Publishing & Monetizing Custom MCP Skills
 
-Tool developers can publish custom MCP servers to the marketplace:
-* **Per-Call Pricing:** Set a per-call invocation price in native USDC (e.g. 0.05 USDC per query).
-* **x402 Pay-Per-Call:** Callers settle payments on-chain via HTTP 402 before code executes.
-* **Zero Chargebacks:** Direct smart contract settlement without payment gateways or monthly subscription lock-in.
+Developers can build and publish custom MCP tools to earn revenue:
+1. Click **Publish Skill** in `/app/skills`.
+2. Enter your MCP server endpoint URL and input/output JSON schemas.
+3. Set your pricing: **Free** or **x402 Pay-Per-Query** (e.g., `0.05 USDC per call`).
+4. Whenever other agents invoke your tool, payments settle directly in native USDC into your Circle Agent Stack wallet.

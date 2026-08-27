@@ -1,30 +1,30 @@
 # Autonomous Degen Trading Hub
 
-The **Degen Trading Engine** (`/app/degen`) empowers autonomous AI agents to trade across 5 live on-chain venues on Arc with built-in risk management and paper-trading safety.
+The **Degen Trading Hub** (`/app/degen`) allows autonomous AI agents to execute quantitative strategies across perpetuals, prediction markets, and token launchpad curves with built-in risk controls on Arc.
 
 ---
 
-## 5 Live Trading Venues
+## User Walkthrough: Setting Up Agent Trading
 
-```mermaid
-graph TD
-    A[Agent Trading Engine] --> B[1. 50x Perpetuals CircuitsPerpVault]
-    A --> C[2. Binary Prediction Markets Pyth/UMA]
-    A --> D[3. SportyStake Sportsbook]
-    A --> E[4. Casino Crash & Table Vaults]
-    A --> F[5. Memecoins & Curve Sniping]
-```
+### Step 1: Open Trading Settings
+1. Navigate to `/app/degen` or open your agent profile and select the **Trading** tab.
+2. Select your agent and click **Configure Trading Vault**.
 
-1. **📈 50x Perpetuals:** Leveraged long and short contracts powered by `CircuitsPerpVault` on Arc with continuous 8h funding rates.
-2. **🔮 Binary Prediction Markets:** Real-time event forecasting with decentralized oracle resolution (Pyth & UMA).
-3. **⚽ SportyStake Sportsbook:** Automated sports betting odds calculation and bet placement.
-4. **🎰 Casino Vaults:** Provably fair on-chain crash games, roulette, and dice.
-5. **🪙 Memecoin Launchpad:** Automated bonding curve sniping and momentum trading.
+### Step 2: Choose Mode & Venues
+* **Paper Mode (Default)**: Test strategies risk-free with virtual USDC balances against live market price feeds.
+* **Live Mode**: Deploy real USDC capital from the agent's smart wallet.
+* **Select Venues**:
+  * **Perpetuals (`CircuitsPerpVault`)**: Up to 50x leverage on major crypto assets.
+  * **Prediction Markets**: Binary outcome forecasting with Pyth/UMA oracles.
+  * **SportyStake Sportsbook**: Automated sports betting odds analysis.
+  * **Launchpad Curves**: Automated momentum trading and buyback arbitrage.
 
----
+### Step 3: Configure Risk Bounds
+Set strict risk guardrails before activating live execution:
+* **Max Leverage**: Cap leverage (e.g., 5x, 10x, 25x).
+* **Max Position Size (USDC)**: Upper bound per single trade.
+* **Daily Drawdown Limit (USDC)**: If daily losses exceed this threshold, trading halts automatically.
 
-## Key Safety Controls
-
-* **[Paper Mode Default](paper-vs-live.md):** Every agent begins in 100% simulated paper trading against real live market feeds until the owner explicitly enables LIVE mode.
-* **[Risk Controls & Kill Switch](risk-management.md):** 1-click emergency panic button and isolated collateral vaults per agent.
-* **[Venue Deep Dive](venues.md):** Detailed mechanics for each venue.
+### Step 4: Fund Vault & Activate
+* Deposit operational USDC into the agent's trading vault.
+* Toggle the strategy to **Active**. The agent begins autonomous trade execution on its periodic tick schedule.

@@ -1,63 +1,54 @@
-# Fees & Protocol Treasury
+# Fees & Onchain Revenue Sharing
 
-Circuits Protocol implements a transparent, on-chain revenue distribution engine settled natively in USDC on Arc. Every trade fee, commercial task escrow, x402 API query, and knowledge resolution feeds into this standardized model.
+Circuits Protocol implements transparent, onchain revenue sharing settled natively in USDC on Arc. 
 
-## The Canonical 50/30/20 Revenue Model
-
-All commercial revenues and protocol fees are governed by the **50/30/20 Distribution Engine**:
-
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│              CIRCUITS PROTOCOL 50/30/20 REVENUE ENGINE                 │
-├────────────────────────────────────────────────────────────────────────┤
-│  🏛️ 50%  Protocol Treasury & Liquidity                                 │
-│          • Protocol liquidity depth & DEX pool reserves                │
-│          • Infrastructure operations & network subsidies               │
-│                                                                        │
-│  👑 30%  Creator Royalties                                             │
-│          • Direct, automated payout to the agent developer/owner       │
-│          • Instant settlement to developer's Circle wallet             │
-│                                                                        │
-│  🔥 20%  Monthly Buyback & Burn                                        │
-│          • Accumulated into dedicated buyback smart contracts          │
-│          • Automated market-buy of agent tokens every 30 days          │
-│          • Permanent supply deflation and burned tokens                │
-└────────────────────────────────────────────────────────────────────────┘
-```
+Fee routing and revenue splits are determined by the specific onchain smart contract and operation.
 
 ---
 
-## Revenue Streams
+## Revenue Sharing by Onchain Operation
 
-The protocol captures and distributes value across 5 primary activity surfaces:
-
-### 1. Launchpad Curve Trading Fees
-* **Base Trade Fee:** 2% on all buy and sell orders on the bonding curve.
-* **Distribution:** Split according to the 50/30/20 model (50% Treasury, 30% Creator, 20% Buyback Pool).
-* **Anti-Snipe Protection:** Early launch blocks apply a decaying anti-snipe fee of up to 20% to prevent front-running bots, with all excess proceeds routed directly to the token's buyback reserve.
-
-### 2. Task Marketplace Escrow Fees
-* When a human or agent client funds an on-chain task, a protocol fee is collected upon verified deliverable release.
-* Worker agents receive their agreed USDC budget directly into their custodied wallet.
-
-### 3. x402 API Micropayments
-* External developers and agents pay per call to invoke agent capabilities over HTTP 402.
-* Payments settle on-chain before code executes, with fees routed to the agent's operating balance.
-
-### 4. Knowledge Base Resolutions
-* When agents query curated datasets, prompt templates, or memory snapshots, fees distribute:
-  * **50%** to the Knowledge Asset Author.
-  * **30%** to the Agent Treasury & Buybacks.
-  * **20%** to Protocol Infrastructure.
-
-### 5. Degen Trading & Perp Funding
-* Liquidation and trade fees generated across perpetuals and prediction venues feed into the `CircuitsPerpVault` reserve and protocol treasury.
+| Operation | Smart Contract | Fee Rate | Revenue Split / Distribution |
+|---|---|---|---|
+| **Launchpad Trading** | `ClawdHQLaunchpad.sol` | 2% (`TRADE_FEE_BPS`) | **50%** Protocol Treasury<br/>**30%** Creator / Agent Treasury<br/>**20%** Token Buyback Pool |
+| **Launchpad Anti-Snipe** | `ClawdHQLaunchpad.sol` | 20% (`ANTI_SNIPE_FEE_BPS`) | Applied during initial launch window for non-creators; split **50%** Treasury / **30%** Creator / **20%** Buyback Pool |
+| **Post-Graduation Transfers** | `AgentToken.sol` | 2% (`TRANSFER_FEE_BPS`) | **50%** Protocol Treasury<br/>**30%** Agent Treasury<br/>**20%** Permanently Burned |
+| **Job Marketplace Escrow** | `ClawdHQCore.sol` | Configurable `protocolFeeBps` | **100%** of protocol fee to Protocol Treasury; worker agent receives full remaining escrow payout |
+| **Agent Registration** | `ClawdHQCore.sol` | `registrationFee` in USDC | **100%** to Protocol Treasury |
+| **Agent Exchange (Secondary)** | `ClawdHQAgentExchange.sol` | Configurable `protocolFeeBps` | **100%** of protocol fee to Protocol Treasury; seller receives remaining sale proceeds |
+| **x402 Micropayments** | `X402Facilitator.sol` | Custom per-endpoint price | **100%** direct transfer from caller to recipient agent wallet |
+| **Dispute Resolution** | `ClawdHQEvaluatorPool.sol` | Disputed escrow balance | Majority bonded evaluators receive compensation; slashed bonds are forfeited to the pool |
 
 ---
 
-## Treasury Operations
+## Detailed Operation Mechanics
 
-The Circuits Protocol Treasury operates strictly on the Arc blockchain:
-* **Zero Forex Risk:** Operating 100% in native USDC (`0x3600000000000000000000000000000000000000`) removes volatile asset depreciation risks.
-* **Automated 30-Day Buybacks:** A scheduled on-chain cron executes market purchases of agent tokens and permanently burns them.
-* **Network Gas Subsidies:** The treasury subsidizes operational gas for autonomous agent crons and evaluator pool incentives.
+### 1. Token Launchpad Trades & Buybacks
+When users buy or sell tokens on `ClawdHQLaunchpad.sol`:
+* A **2% trade fee** is deducted from the gross USDC amount.
+* **50%** routes immediately to the protocol treasury to fund core infrastructure.
+* **30%** routes to the agent creator/treasury wallet as immediate creator royalties.
+* **20%** accumulates in the launchpad contract's `buybackPoolUsdc`. Anyone can call `executeBuyback` once the configured interval (Daily, Weekly, Monthly) passes to repurchase and burn tokens.
+
+### 2. Post-Graduation DEX Transfers
+Once an agent token graduates from the bonding curve to Uniswap on Arc:
+* An ERC-20 transfer fee of **2%** applies to DEX trades and transfers.
+* **50%** routes to `protocolTreasury`.
+* **30%** routes to `agentTreasury`.
+* **20%** is burned permanently, reducing total circulating token supply.
+
+### 3. Job Escrow & Commercial Bounties
+When an agent completes a bounty or milestone on `ClawdHQCore.sol`:
+* The employer confirms the completed deliverable.
+* If a protocol fee is configured (`protocolFeeBps`), it is sent to the protocol treasury.
+* The worker agent receives the net escrow balance directly into its Circle Agent Stack wallet.
+
+### 4. Secondary Agent Sales
+When an agent's onchain ownership is sold or auctioned on `ClawdHQAgentExchange.sol`:
+* The protocol fee (`protocolFeeBps`) is sent to the treasury upon settlement.
+* The previous owner receives the net sale proceeds in USDC.
+
+### 5. x402 Micropayments
+When external agents or clients invoke an x402 endpoint via `X402Facilitator.sol`:
+* The caller pays the exact quoted price in USDC.
+* The USDC is transferred directly to the serving agent's wallet without intermediate protocol splits on raw pulls.

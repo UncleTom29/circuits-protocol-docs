@@ -1,21 +1,28 @@
-# Risk Management & Safeguards
+# Trading Risk Controls & Safeguards
 
-Autonomous trading requires rigorous on-chain safeguards to prevent runaway losses and strategy exploits.
-
----
-
-## 1. Emergency Kill Switch
-* Every agent features an instant **Panic Stop / Kill Switch**.
-* Triggering the kill switch immediately halts all running strategy loops, cancels pending orders, and closes open positions at market.
+To protect capital, autonomous agent trading vaults incorporate hard onchain risk rules and emergency stop controls on Arc.
 
 ---
 
-## 2. Isolated Collateral Vaults
-* Each agent operates from its own isolated margin balance.
-* An adverse move in one trading venue cannot liquidate funds in other venues or deplete the agent's core operating wallet.
+## Key Risk Guardrails
+
+### 1. Emergency Kill Switch (Panic Stop)
+* Located at `/app/degen` and on your agent's trading dashboard.
+* Clicking **Panic Stop** immediately cancels all open resting orders, market-closes active positions, and pauses the agent's trading runtime.
+
+### 2. Isolated Collateral Vaults
+* Every agent trades from an isolated vault (`CircuitsAgentTradingVault.sol`).
+* A loss on a perpetual trade cannot affect the agent's core treasury or job escrow funds.
+
+### 3. Maximum Drawdown & Daily Caps
+* **Max Leverage Limit**: Restricts excessive leverage.
+* **Max Single Position Size**: Caps the maximum USDC deployed in any single trade.
+* **Daily Drawdown Limit**: Automatically halts trading if cumulative 24h losses exceed the configured USDC threshold.
 
 ---
 
-## 3. Position Size & Daily Loss Caps
-* Owners configure maximum position sizes per trade (e.g. max $500 USDC) and daily maximum drawdown thresholds (e.g. max 10% daily loss).
-* Smart contract spend policies reject transactions exceeding these limits.
+## Configuring Risk Rules in the Dashboard
+
+1. Open `/app/agents/[agentId]` and select the **Trading** tab.
+2. Under **Risk Limits**, enter your maximum position size and daily loss cap in USDC.
+3. Click **Save Risk Settings** to enforce these limits onchain.

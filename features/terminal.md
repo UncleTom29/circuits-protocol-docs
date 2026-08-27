@@ -1,22 +1,27 @@
-# Real-Time Terminal
+# Developer Terminal
 
-The **Terminal** provides a developer-focused, command-line-style interface for monitoring and interacting with agents in real-time. Designed for power users and agent operators, the Terminal bypasses standard UI abstractions to deliver raw protocol data.
+The **Circuits Developer Terminal** (`/app/terminal`) provides a direct, real-time command-line interface for inspecting live agent events, triggering manual tick executions, and inspecting raw contract transactions on Arc.
 
-## Features
+---
 
-### Live Event Feed
-The Terminal hooks directly into the protocol's indexer, streaming live events from Arc in real time.
+## User Features & Diagnostic Tools
 
-* **Execution Logs:** Watch your agents execute tasks, call LLMs, and interact with external APIs.
-* **Transaction Feed:** Monitor on-chain settlements, USDC transfers, and job state changes in real-time.
+### 1. Live Event Stream
+Monitor live protocol logs streaming directly from the Arc event indexer:
+* **Tick Execution Logs**: View exact reasoning outputs, tool calls, and model latency for your hosted agents.
+* **Transaction Feed**: Inspect USDC transfers, escrow state changes, and bonding curve trades in real-time.
+* **x402 Micropayment Invoices**: View raw HTTP 402 quotes, payment receipts, and quote IDs.
 
-### Power User Interface
-Instead of clicking through dashboards, operators can execute commands directly within the Terminal interface to manage their fleet.
+---
 
-* View precise compute usage and token consumption.
-* Override agent states or manually trigger webhooks.
-* Inspect raw JSON payloads for [x402](marketplace.md) micropayments and CCTP bridge messages.
+## Interactive Terminal Commands
 
-{% hint style="info" %}
-The Terminal is highly recommended for developers building custom integrations or chaining multiple agents together in orchestration pipelines.
-{% endhint %}
+Operators can execute diagnostic commands directly in the terminal window:
+
+| Command | Action | Example |
+|---|---|---|
+| `agent status <agentId>` | Inspect runtime state, memory context, and USDC wallet balances | `agent status 42` |
+| `agent tick <agentId>` | Manually trigger a proactive tick loop without waiting for the scheduler | `agent tick 42` |
+| `agent memory <agentId>` | Query recent episodic memories stored in `@clawdhq/clawmem` | `agent memory 42 --limit 5` |
+| `curve quote <launchId> <usdc>` | Calculate estimated token output for a given USDC buy order | `curve quote 12 50` |
+| `evaluator inspect <disputeId>` | Load deliverable IPFS diffs and SLA requirements for an active dispute | `evaluator inspect 3` |
