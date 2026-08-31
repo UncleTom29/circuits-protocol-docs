@@ -1,6 +1,6 @@
 # Why Arc?
 
-Circuits Protocol is built natively on **Arc**, Circle's stablecoin-native Layer 1 blockchain.
+Circuits Protocol is built natively and exclusively on **Arc**, Circle's stablecoin-native Layer 1 blockchain.
 
 Autonomous AI agents require an execution environment that is fast, deterministic, and free of multi-token currency friction. Arc provides the first blockchain architecture designed specifically for stablecoin-first autonomous commerce.
 
@@ -10,12 +10,12 @@ Autonomous AI agents require an execution environment that is fast, deterministi
 
 The primary advantage of Arc is that **USDC is the native gas token**.
 
-On traditional networks like Ethereum, Base, or Solana, an autonomous agent must hold two distinct assets:
-1. **The settlement asset** (typically a stablecoin like USDC) to receive payments and pay for services.
-2. **The native gas asset** (ETH, SOL) to pay the validator network for every state write.
+On traditional networks, an autonomous agent must hold two distinct assets:
+1. **The settlement asset** (USDC) to receive payments and pay for services.
+2. **The native gas asset** to pay the validator network for every state write.
 
 This dual-asset requirement introduces severe operational friction for autonomous agents:
-* An agent with $10,000 in USDC can be rendered completely unresponsive if its gas wallet drops to $0.00 in ETH.
+* An agent with $10,000 in USDC can be rendered completely unresponsive if its gas wallet runs out of separate gas funds.
 * The agent must run continuous balance monitoring, DEX swaps, and slippage calculations just to maintain gas.
 * Gas token volatility introduces unpredictable operating expenses into the agent's unit economics.
 
@@ -33,25 +33,6 @@ This allows agents to stream sub-cent payments via HTTP 402 without precision lo
 
 ---
 
-## 3. Native Circle CCTP V2 Integration
+## 3. High Throughput & Sub-Second Finality
 
-Arc is integrated directly into Circle's cross-chain architecture:
-* **Slippage-Free Transfers**: Circle's Cross-Chain Transfer Protocol (CCTP) burns USDC on source chains (such as Base or Ethereum) and mints native USDC directly on Arc.
-* **No Wrapped Asset Risk**: Assets bridged via CCTP are canonical native USDC, eliminating the bridge exploit risks associated with third-party liquidity pool wrappers.
-* **Circle Iris Tracking**: Real-time cross-chain attestation tracking provides instant verification of incoming bridge transactions.
-
----
-
-## Arc Testnet Configuration
-
-| Parameter | Value |
-|---|---|
-| **Network Name** | Arc Testnet |
-| **Chain ID** | `5042002` |
-| **Native Gas Token** | USDC |
-| **RPC Endpoint** | `https://arc-testnet.drpc.org` |
-| **Block Explorer** | `https://testnet.arcscan.app` |
-| **USDC Contract Address** | `0x3600000000000000000000000000000000000000` |
-| **CCTP TokenMessenger** | `0x8FE6B999Dc680CcFDD5Bf7EB0974218be2542DAA` |
-| **CCTP MessageTransmitter** | `0xE737e5cEBEEBa77EFE34D4aa090756590b1CE275` |
-| **CCTP Domain** | `26` |
+Arc is engineered for low latency and high throughput, making it optimal for autonomous agent-to-agent negotiation, instant escrow release, and automated trading vaults.

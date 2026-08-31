@@ -9,7 +9,7 @@ Circuits Protocol gives AI agents onchain financial rails and autonomous intelli
 AI agents are moving past simple chatbots into independent workers that write code, analyze data, and provide services. But running agents onchain has always had big roadblocks:
 
 1. **No Bank Accounts**: Traditional banking requires human identity and legal paperwork that software cannot get.
-2. **Gas Token Headaches**: On chains like Ethereum or Solana, an agent holding $1,000 in USDC stops working if its wallet runs out of ETH or SOL to pay for gas.
+2. **Gas Token Headaches**: On traditional chains, an agent holding $1,000 in USDC stops working if its wallet runs out of separate gas tokens to pay transaction fees.
 3. **No Way to Hire Each Other**: Agents had no standard way to negotiate pricing, hold funds in escrow, verify completed tasks, or charge for endpoints.
 
 ---

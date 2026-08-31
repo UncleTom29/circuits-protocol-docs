@@ -1,16 +1,17 @@
 # Tokenize Your Agents: Launchpad
 
-The **Circuits Protocol Launchpad** allows you to tokenize your agents on fair-launch curves with automated **Uniswap** graduation on Arc.
+The **Circuits Protocol Launchpad** (`/app/launchpad`) allows creators and developers to tokenize autonomous AI agents on fair-launch bonding curves with automated **Uniswap** graduation on Arc.
 
 ---
 
 ## Fair Launch Principles
 
 Every token launched on Circuits Protocol adheres to strict guarantees:
-* **Zero Presales**: No private rounds, no team pre-allocations, and no insider allocations.
-* **100% Public Supply**: 1,000,000,000 (1 Billion) tokens start entirely on the public curve.
-* **Automated Uniswap Graduation**: When the graduation cap is reached, liquidity automatically migrates to Uniswap on Arc with permanently locked LP tokens.
-* **Scheduled Fee Buybacks**: Accumulated trading fees execute automated buybacks and burns.
+* **Zero Presales**: No private rounds, no team pre-allocations, and no insider vesting schedules.
+* **100% Public Supply**: Fixed 1,000,000,000 (1 Billion) tokens start entirely on the public bonding curve ($x \cdot y = k$).
+* **Automated Uniswap Graduation**: When the graduation reserve is reached (19,000 USDC), liquidity automatically migrates to Uniswap V2 on Arc with permanently locked LP tokens.
+* **Customizable Fee Buybacks**: Accumulated trading fees execute scheduled buybacks and burns with customizable basis points (`buybackBps`).
+* **Scheduled Launches & Anti-Snipe**: Creators can schedule future launch timestamps (`launchAt`) with a 20% anti-snipe fee on block-zero bot buys.
 
 ---
 
@@ -21,15 +22,15 @@ Every token launched on Circuits Protocol adheres to strict guarantees:
 | **Total Supply** | 1,000,000,000 (1 Billion) tokens fixed |
 | **Settlement Currency** | Native USDC on Arc (`0x3600000000000000000000000000000000000000`) |
 | **Pricing Invariant** | Constant-Product Curve ($x \cdot y = k$) |
-| **Fee Model** | 2% trading fee with automated buyback pool allocation |
-| **Graduation Target** | Automated migration to Uniswap upon reaching reserve threshold |
+| **Fee Model** | 2% trading fee (50% Treasury, 30% Creator Royalties, 20% Buyback Pool) |
+| **Buyback BPS** | Customizable by creator (1% to 100%, default 20%) |
+| **Graduation Target** | Automated migration to Uniswap upon reaching 19,000 USDC curve reserve |
 
 ---
 
-## Launchpad Lifecycle
+## Launchpad Sections
 
-1. **[Creating a Launch](./creating-a-launch.md)**: Tokenize your agents with custom tickers, scheduled launch timestamps, and buyback frequencies.
-2. **[Trading on Curve](./trading-on-curve.md)**: Instant liquidity with deterministic pricing.
-3. **[Curve Mechanics](./bonding-curve.md)**: Virtual reserves and anti-snipe protection.
-4. **[DEX Graduation](./graduation.md)**: Automated Uniswap pool creation with locked LP liquidity.
-5. **[Automated Buybacks](./buybacks.md)**: Permissionless buyback executions from fee pools.
+1. **🔥 Trending Launches**: High-volume tokens actively trading on the curve with real-time graduation progress bars.
+2. **⏳ Upcoming Launches**: Scheduled token launches with live countdowns and creator profile cards.
+3. **🎓 Graduated Tokens**: Tokens that reached their funding targets and trade openly on Uniswap on Arc.
+4. **🚀 Create Launch**: Launch wizard to tokenize any registered agent.

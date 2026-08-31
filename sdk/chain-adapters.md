@@ -1,6 +1,6 @@
 # Contract Adapters & Arc Architecture
 
-Circuits Protocol is built **natively on Arc**, Circle's stablecoin-native Layer 1 blockchain. The `@clawdhq/sdk` provides modular, typed EVM adapters for all onchain smart contracts, with Circle CCTP support for bridging USDC into Arc.
+Circuits Protocol is built **natively on Arc**, Circle's stablecoin-native Layer 1 blockchain. The `@clawdhq/sdk` provides modular, typed EVM adapters for all onchain smart contracts on Arc.
 
 ---
 
@@ -10,15 +10,14 @@ The SDK provides typed wrappers for every smart contract deployed on Arc:
 
 | Adapter Class | Target Contract | Primary Capabilities |
 |---|---|---|
-| **`EvmAdapter`** | `ClawdHQCore.sol` | Agent identity registration, metadata updates, job escrow lifecycle, deliverable submission, and peer-to-peer ownership transfers. |
-| **`EvmLaunchpadAdapter`** | `ClawdHQLaunchpad.sol` | Constant-product bonding curve launches ($x \cdot y = k$), token purchases, sales, scheduled trading (`launchAt`), automated buybacks, and graduation triggers. |
+| **`EvmAdapter`** | `ClawdHQCore.sol` | Agent identity registration, metadata updates, job escrow lifecycle, deliverable submission, and fee distribution. |
+| **`EvmLaunchpadAdapter`** | `ClawdHQLaunchpad.sol` | Constant-product bonding curve launches ($x \cdot y = k$), token purchases, sales, scheduled trading (`launchAt`), automated buybacks (`updateBuybackConfig`, `executeBuyback`), and Uniswap graduation. |
 | **`EvmAgentExchangeAdapter`** | `ClawdHQAgentExchange.sol` | Secondary marketplace listings (fixed-price and English auctions) for trading agent ownership. |
-| **`EvmXeroRouterAdapter`** | `XeroRouter.sol` | AMM swaps (`swapExactTokensForTokensSupportingFeeOnTransferTokens`), liquidity provisioning, and price impact calculations for graduated tokens. |
+| **`EvmXeroRouterAdapter`** | `XeroRouter.sol` | AMM swaps (`swapExactTokensForTokensSupportingFeeOnTransferTokens`), liquidity provisioning, and price impact calculations for graduated tokens on Uniswap. |
 | **`EvmNegotiationAdapter`** | `ClawdHQNegotiation.sol` | Agent Commerce Protocol (ACP) negotiations: job proposals, counter-offers, terms acceptance, and escrow commitment. |
 | **`EvmEvaluatorPoolAdapter`** | `ClawdHQEvaluatorPool.sol` | Staked evaluator registration, dispute evaluation requests, commit-reveal voting, and finalizations. |
 | **`EvmStakingAdapter`** | `ClawdHQStaking.sol` | Agent reliability bond deposits, tier requirements, and withdrawals. |
 | **`EvmGovernorAdapter`** | `ClawdHQGovernor.sol` | Protocol governance proposal creation, voting, and timelocked execution. |
-| **`EvmCctpAdapter`** | `TokenMessengerV2` | Circle Cross-Chain Transfer Protocol (CCTP) USDC burn-and-mint bridging into Arc. |
 
 ---
 
@@ -42,24 +41,15 @@ const walletClient = createWalletClient({
 
 // Initialize Core Adapter
 const core = new EvmAdapter({
-  contractAddress: process.env.CORE_CONTRACT_ADDRESS as `0x${string}`,
+  contractAddress: "0xcB30D334c9fb9F7c0e753ef413f5233ACFBC3fAd",
   publicClient,
   walletClient,
 });
 
 // Initialize Launchpad Adapter
 const launchpad = new EvmLaunchpadAdapter({
-  contractAddress: process.env.LAUNCHPAD_CONTRACT_ADDRESS as `0x${string}`,
+  contractAddress: "0x48fc9aFF6C4F395f93B24627715f1ea1482555Cc",
   publicClient,
   walletClient,
 });
 ```
-
----
-
-## Automated Gas & Allowance Management
-
-Because Arc uses USDC as the native gas token, all adapter write methods:
-1. Automatically resolve the canonical USDC address on Arc.
-2. Ensure sufficient ERC-20 token allowance before executing state writes.
-3. Handle nonce queues cleanly during high-frequency agent actions.

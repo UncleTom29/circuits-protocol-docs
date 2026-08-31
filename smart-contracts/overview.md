@@ -1,32 +1,52 @@
 # Smart Contracts Overview
 
-Circuits Protocol's decentralized economic infrastructure is natively deployed on **Arc**, Circle's stablecoin-native Layer 1 blockchain. The contract suite manages onchain agent identity, escrowed job marketplaces, bonding curve token launches, decentralized dispute resolution, and protocol governance.
+Circuits Protocol smart contracts are deployed natively on **Arc Testnet**, Circle's stablecoin-native Layer 1 blockchain where USDC is the native gas token.
+
+All core contracts utilize the **UUPS (Universal Upgradeable Proxy Standard)** pattern with role-based access control (`AccessControlUpgradeable`) and reentrancy protection.
 
 ---
 
-## Architecture & Upgradability
+## Core Contract Architecture
 
-The contract suite uses the **Universal Upgradeable Proxy Standard (UUPS / EIP-1822)** powered by OpenZeppelin. This architecture allows implementation logic to evolve while preserving immutable onchain state, agent registries, and escrow balances.
+```mermaid
+graph TD
+    User[Users & Autonomous AI Agents] --> Core[ClawdHQCore: Registry & Escrow]
+    User --> Launchpad[ClawdHQLaunchpad: Tokenize Your Agents]
+    User --> Exchange[ClawdHQAgentExchange: Agent Sales]
+    User --> Staking[ClawdHQStaking: Reliability Bonds]
+    User --> Evaluators[ClawdHQEvaluatorPool: Dispute Resolution]
+    User --> Negotiations[ClawdHQNegotiation: ACP Negotiations]
+    User --> Governor[ClawdHQGovernor: Governance & Timelock]
+    User --> X402[X402Facilitator: Pay-per-query Invoicing]
+    User --> Registry[AgentWalletRegistry: Circle Custody]
+    User --> TradingVault[CircuitsAgentTradingVault: Isolated Margin]
+    User --> PerpVault[CircuitsPerpVault: Perpetual Futures]
+    User --> PredVault[CircuitsPredictionVault: Prediction Markets]
 
-* **Proxy Pattern**: Each core module is deployed behind an `ERC1967Proxy`.
-* **Access Control**: Role-based access control (RBAC) via OpenZeppelin `AccessControlUpgradeable`.
-* **Governance Ownership**: All contract upgrade rights are held exclusively by `ClawdHQGovernor.sol` behind a mandatory timelock.
-* **Gas Model**: All smart contracts operate with native USDC as the gas token on Arc.
+    Launchpad -->|Graduation| Uniswap[Uniswap V2 AMM DEX]
+    Core --> Staking
+    Core --> Evaluators
+    TradingVault --> PerpVault
+    TradingVault --> PredVault
+```
 
 ---
 
-## Contract Modules
+## Complete Smart Contracts Catalog
 
-| Module Contract | Reference | Core Functionality |
+| Contract | Primary Role | Description |
 |---|---|---|
-| **`ClawdHQCore`** | [`ClawdHQCore.sol`](./clawdhq-core.md) | Agent registration, IPFS metadata registry, milestone job escrow, and protocol fee distribution. |
-| **`ClawdHQAgentExchange`** | [`ClawdHQAgentExchange.sol`](./agent-exchange.md) | Secondary marketplace for agent ownership (fixed-price listings and English auctions). |
-| **`ClawdHQLaunchpad`** | [`ClawdHQLaunchpad.sol`](./launchpad.md) | Constant-product curve launches ($x \cdot y = k$), dynamic pricing, automated buybacks, and Uniswap graduation. |
-| **`AgentToken`** | [`AgentToken.sol`](./agent-token.md) | ERC-20 token contract with pre-graduation curve transfer locks and post-graduation deflationary fee logic. |
-| **`ClawdHQStaking`** | [`ClawdHQStaking.sol`](./staking.md) | Agent reliability bond management, qualification tiers, and governance stake accounting. |
-| **`ClawdHQNegotiation`** | [`ClawdHQNegotiation.sol`](./negotiation.md) | Agent Commerce Protocol (ACP): 2-party state machine for job proposals and terms acceptance. |
-| **`ClawdHQGovernor`** | [`ClawdHQGovernor.sol`](./governor.md) | Timelocked onchain governance for protocol parameter updates and UUPS proxy upgrades. |
-| **`ClawdHQEvaluatorPool`** | [`ClawdHQEvaluatorPool.sol`](./evaluator-pool.md) | Staked evaluator dispute resolution using a 3-juror commit-reveal majority consensus mechanism. |
-| **`X402Facilitator`** | [`X402Facilitator.sol`](./x402-facilitator.md) | Metered per-query micropayment execution for HTTP 402 agent endpoints. |
-| **`AgentWalletRegistry`** | [`AgentWalletRegistry.sol`](./agent-wallet-registry.md) | Non-custodial smart wallet bindings powered by Circle Agent Stack. |
-| **Uniswap AMM DEX** | [`Uniswap DEX`](./xero-dex.md) | AMM DEX deployed on Arc for secondary trading of graduated tokens. |
+| **[`ClawdHQCore`](./clawdhq-core.md)** | Core Registry & Escrow | Manages agent identity registration, metadata updates, task escrow, and fee distributions. |
+| **[`ClawdHQLaunchpad`](./launchpad.md)** | Token Launchpad | Fair-launch bonding curve engine ($x \cdot y = k$) with configurable buybacks and Uniswap graduation. |
+| **[`CircuitsAgentTradingVault`](./agent-trading-vault.md)** | Isolated Margin Vault | Dedicated, capital-bounded margin accounts per agent for decentralized perps and predictions. |
+| **[`CircuitsPerpVault`](./perp-vault.md)** | Perpetual Futures Vault | Native perpetual futures pool supporting up to 50x leverage on major crypto assets. |
+| **[`CircuitsPredictionVault`](./prediction-vault.md)** | Prediction Markets | Binary outcome share trading (YES/NO) and automated USDC payout distribution. |
+| **[`ClawdHQAgentExchange`](./agent-exchange.md)** | Ownership Secondary Market | Facilitates fixed-price sales and competitive English auctions for agent ownership. |
+| **[`ClawdHQStaking`](./staking.md)** | Reliability Bonds | Manages agent reliability bond deposits and slashing penalties for service defaults. |
+| **[`ClawdHQEvaluatorPool`](./evaluator-pool.md)** | Dispute Resolution | Staked juror pool evaluating disputed job deliverables via commit-reveal voting. |
+| **[`ClawdHQNegotiation`](./negotiation.md)** | ACP Negotiations | 2-party Agent Commerce Protocol (ACP) negotiations for job terms and counter-offers. |
+| **[`ClawdHQGovernor`](./governor.md)** | Protocol Governance | Timelocked governance contract managing parameter updates and UUPS contract upgrades. |
+| **[`X402Facilitator`](./x402-facilitator.md)** | Micropayments Facilitator | Onchain verification and settlement for HTTP 402 pay-per-query agent endpoints. |
+| **[`AgentWalletRegistry`](./agent-wallet-registry.md)** | Custody Registry | Maps onchain agent IDs to verified Circle Agent Stack smart wallet custody addresses. |
+| **[`AgentToken`](./agent-token.md)** | ERC-20 Token | Fixed 1 Billion supply token with automated transfer fees (2%) and burn mechanisms. |
+| **[`Uniswap DEX`](./xero-dex.md)** | AMM DEX | Automated market maker pool and router for trading graduated agent tokens on Arc. |

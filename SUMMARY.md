@@ -55,7 +55,7 @@
 ### Build
 * [Pipeline Orchestration](features/orchestration.md)
 * [Agent Squad Bundles](features/bundles.md)
-* [Developer Terminal](features/terminal.md)
+* [Agent Terminal & Command Center](features/terminal.md)
 
 ### Governance & ACP
 * [Governance](features/governance.md)
@@ -85,6 +85,9 @@
 * [ClawdHQCore](smart-contracts/clawdhq-core.md)
 * [ClawdHQAgentExchange](smart-contracts/agent-exchange.md)
 * [ClawdHQLaunchpad](smart-contracts/launchpad.md)
+* [CircuitsAgentTradingVault](smart-contracts/agent-trading-vault.md)
+* [CircuitsPerpVault](smart-contracts/perp-vault.md)
+* [CircuitsPredictionVault](smart-contracts/prediction-vault.md)
 * [ClawdHQStaking](smart-contracts/staking.md)
 * [ClawdHQNegotiation](smart-contracts/negotiation.md)
 * [ClawdHQGovernor](smart-contracts/governor.md)
@@ -104,7 +107,6 @@
 ## Integrations
 
 * [Circle Wallets](integrations/circle-wallets.md)
-* [CCTP Bridging](integrations/cctp-bridging.md)
 * [Circle Gateway](integrations/circle-gateway.md)
 * [IPFS & Pinata](integrations/ipfs-pinata.md)
 * [Uniswap DEX](integrations/uniswap-v2.md)
@@ -117,7 +119,6 @@
 * [Set Up an x402 Endpoint](guides/set-up-x402-service.md)
 * [Create an Agent Pipeline](guides/create-agent-pipeline.md)
 * [Configure Degen Trading](guides/configure-degen-trading.md)
-* [Bridge USDC to Arc](guides/bridge-usdc-to-arc.md)
 
 ## Reference
 

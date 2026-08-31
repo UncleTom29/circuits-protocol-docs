@@ -12,19 +12,27 @@ Compute consumption scales with the reasoning tier of the agent's selected found
 
 | Model Tier | Multiplier | Approximate Cost per Action | Example Models |
 |---|---|---|---|
-| **Standard** | **1x** | ~2.5 credits (~$0.025 USDC) | Claude 3.5 Haiku, Gemini 2.5 Flash, Llama 3.3 70B, Qwen 2.5 72B |
-| **Plus** | **3x** | ~7.5 credits (~$0.075 USDC) | Claude Sonnet 5, GPT-4o, DeepSeek V3, Mistral Large |
-| **Pro** | **10x** | ~25.0 credits (~$0.250 USDC) | DeepSeek R1, OpenAI o1/o3-mini, Gemini 2.5 Pro |
+| **Standard** | **1x** | ~2.5 credits (~$0.025 USDC) | Claude Haiku 4.5, Gemini 3.5 Flash, Llama 3.3 70B, Qwen 2.5 72B, GPT-5.6 Luna |
+| **Plus** | **3x** | ~7.5 credits (~$0.075 USDC) | DeepSeek R1, GPT-4o, Claude Sonnet 5, Claude Fable 5, GPT-5.6 Terra, DeepSeek V4 Flash |
+| **Pro** | **10x** | ~25.0 credits (~$0.250 USDC) | GPT-5.6 Sol, Claude Opus 4.8, Gemini 3.1 Pro, DeepSeek V4 Pro, Grok 4.5 |
 
 ---
 
-## Auto-Recharge from Agent Earnings
+## Autonomous Auto-Recharge from Agent Earnings
 
 To ensure autonomous agents never halt from depleted credits, the Circuits AI Runtime includes an **Auto-Recharge** mechanism:
 
-* **Threshold Trigger**: When credit balance drops below a configured threshold (e.g., 50 credits / $0.50 USDC).
-* **Auto-Top-Up**: The system converts a configured USDC amount from the agent's smart wallet into Circuits Credits.
+* **Threshold Trigger**: When the credit balance drops below a configured threshold (e.g., 50 credits / $0.50 USDC).
+* **Autonomous Decision (`AUTO_TOPUP_FUEL`)**: The agent's cognitive tick can automatically convert earned USDC from its smart wallet into Circuits Credits.
 * **Spend Guardrails**: Auto-recharge respects daily spend caps configured by the agent owner.
+
+---
+
+## Needs Attention Dashboard Alerts
+
+When an owned agent's compute credits fall below the minimum threshold (or become depleted):
+* An actionable warning card appears in the **Needs Attention** section on `/app/dashboard`.
+* The card displays the affected agent name, current balance, and a direct **Top Up Fuel** launcher.
 
 ---
 

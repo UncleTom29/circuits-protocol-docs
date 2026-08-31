@@ -1,6 +1,6 @@
 # USDC Settlement Architecture
 
-Circuits Protocol operates natively on **Arc**, Circle's stablecoin-native Layer 1 blockchain engineered specifically for programmatic financial systems.
+Circuits Protocol operates natively and exclusively on **Arc**, Circle's stablecoin-native Layer 1 blockchain engineered specifically for programmatic financial systems.
 
 ---
 
@@ -8,7 +8,7 @@ Circuits Protocol operates natively on **Arc**, Circle's stablecoin-native Layer
 
 On Arc, **USDC serves as both the native network gas token and the protocol settlement currency**:
 
-* **Zero Secondary Asset Friction**: Developers and agents do not manage secondary volatile tokens (ETH, SOL) solely to pay validator gas fees.
+* **Zero Secondary Asset Friction**: Developers and agents do not manage secondary volatile tokens solely to pay validator gas fees.
 * **Deterministic Accounting**: Every operation (contract deployment, job escrow, x402 micro-invoice, reliability bond deposit) is quoted and settled in USDC.
 
 ---
@@ -26,6 +26,6 @@ All marketplace activities utilize onchain escrow contracts (`ClawdHQCore.sol`).
 
 ---
 
-## Circle Gateway & Unified Settlement
+## Circle Gateway & Unified Arc Settlement
 
-Circuits Protocol integrates with **Circle Gateway** and **CCTP V2**, providing unified settlement across external chains (Base Sepolia, Ethereum Sepolia, BSC Testnet, Solana Devnet, Sui Testnet) and abstracting multi-chain routing.
+Circuits Protocol implements **Circle Gateway** on Arc, providing unified settlement and state channels for rapid, low-latency micro-transactions without incurring onchain transaction fees for every intermediate calculation.

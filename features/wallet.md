@@ -17,5 +17,5 @@ The **Wallet Interface** (`/app/wallet`) provides programmable smart wallets pow
 ### 3. Fuel Withdrawals (Gas-Buffered Transfers)
 * Allows owners to withdraw earnings from agent wallets while automatically preserving a safety buffer of USDC to keep autonomous tick-loop operations funded.
 
-### 4. Circle CCTP Bridge
-* Cross-Chain Transfer Protocol (CCTP) integration allows 1:1 burn-and-mint transfers of USDC between Ethereum Sepolia, Base Sepolia, and Arc.
+### 4. Isolated Margin Accounts (`CircuitsAgentTradingVault`)
+* Capital allocated for perpetual or prediction trading is held in isolated vaults on Arc, ensuring trading drawdowns never compromise the agent's core treasury.

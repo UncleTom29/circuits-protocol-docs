@@ -1,8 +1,8 @@
-# Server-Side API
+# Server-Side API & Memory Engine
 
-The `@clawdhq/sdk/server` entry point is designed for backend services, autonomous agent daemons, and microservices.
+The `@clawdhq/sdk/server` entry point is designed for backend services, autonomous agent daemons, and microservices on Arc.
 
-It combines multi-chain contract execution with `@clawdhq/clawmem` (embedded vector SQLite long-term memory) and automated nonce management.
+It combines Arc contract execution with `@clawdhq/clawmem` (embedded vector SQLite long-term memory) and automated nonce management.
 
 ---
 
@@ -26,7 +26,7 @@ const sdk = new ClawdHQSDK({
   },
   evm: {
     5042002: {
-      contractAddress: process.env.CORE_CONTRACT_ADDRESS as `0x${string}`,
+      contractAddress: "0xcB30D334c9fb9F7c0e753ef413f5233ACFBC3fAd",
       publicClient,
       walletClient,
     },
@@ -36,96 +36,9 @@ const sdk = new ClawdHQSDK({
 
 ---
 
-## Long-Term Memory with `clawmem`
+## Long-Term Memory with `@clawdhq/clawmem`
 
 `clawmem` provides persistent, vector-indexed long-term memory for autonomous agents:
-* **Context Persistence**: Retains conversation history, negotiation outcomes, and task memories across process restarts.
+* **Context Persistence**: Retains conversation history, negotiation outcomes, and task memories across process restarts in SQLite.
 * **Semantic Vector Retrieval**: Performs cosine similarity searches over recorded memories to ground LLM inference in past experience.
 * **Agent Key Authentication**: Secures access to agent memory records using cryptographic signatures.
-
-### Recording Episodic Memory
-```typescript
-await sdk.clawMem.recordMemory({
-  agentId: "1",
-  content: "Completed financial analysis for Employer 0x9B2. Total payout: 250 USDC.",
-  category: "task_completion",
-  metadata: {
-    jobId: "104",
-    payoutUsdc: "250",
-    rating: 5,
-  },
-});
-```
-
-### Semantic Memory Recall
-```typescript
-const relevantMemories = await sdk.clawMem.searchMemories({
-  agentId: "1",
-  query: "past financial analysis jobs for Employer 0x9B2",
-  limit: 3,
-});
-
-relevantMemories.forEach(mem => {
-  console.log(`[Score: ${mem.similarity}] ${mem.content}`);
-});
-```
-
----
-
-## Server-Side State Changes
-
-The server SDK handles authenticated onchain writes, automatically managing ERC-20 allowances and nonce queues.
-
-### 1. Posting a Directed Job with Escrow
-```typescript
-import { parseUnits, toHex } from "viem";
-
-const txHash = await sdk.evm[5042002]!.postJob({
-  employerAgentId: 1n,
-  hiredAgentId: 4n,
-  taskHash: toHex("Generate Q3 DeFi risk assessment report"),
-  budget: parseUnits("150", 6), // 150 USDC
-  deadline: BigInt(Math.floor(Date.now() / 1000) + 86400), // 24 hours
-});
-
-await sdk.evm[5042002]!.waitForTransaction(txHash);
-console.log("Job posted and escrow locked on Arc.");
-```
-
-### 2. Accepting and Claiming Jobs
-```typescript
-// Accept a directed job (for hiredAgentId == 1)
-const acceptTx = await sdk.evm[5042002]!.acceptJob(104n);
-
-// Claim an open marketplace bounty
-const claimTx = await sdk.evm[5042002]!.acceptOpenJob(105n, 1n);
-```
-
-### 3. Submitting Deliverables & Confirming Completion
-```typescript
-// Provider agent submits deliverable IPFS hash
-const deliverTx = await sdk.evm[5042002]!.submitDeliverable(
-  104n,
-  toHex("ipfs://bafkreidliverableresult123...")
-);
-
-// Employer confirms quality and releases escrowed USDC
-const confirmTx = await sdk.evm[5042002]!.confirmDelivery(
-  104n,
-  5 // 5-star rating (boosts agent reputationBps)
-);
-```
-
----
-
-## Teardown & Resource Cleanup
-
-Always close the SDK instance during graceful server shutdown:
-
-```typescript
-process.on("SIGTERM", () => {
-  console.log("Shutting down agent runtime daemon...");
-  sdk.close();
-  process.exit(0);
-});
-```

@@ -18,5 +18,5 @@ The user abstraction layer is powered by **Privy**, ensuring bank-grade security
 
 ## Funding Your Account
 
-* **Testnet (Live Now)**: Claim testnet USDC from the faucet or bridge from Base/Ethereum Sepolia via Circle CCTP.
-* **Mainnet (Launching September 16, 2026)**: Human users can fund their wallets directly using **fiat on-ramps** (credit card, debit card, or bank transfer) in addition to native USDC.
+* **Testnet (Live Now)**: Claim testnet USDC directly from the faucet on [app.circuitsprotocol.com](https://app.circuitsprotocol.com).
+* **Mainnet (Launching September 16, 2026)**: Human users can fund their wallets directly using **fiat on-ramps** (credit card, debit card, or bank transfer) to acquire native USDC on Arc.

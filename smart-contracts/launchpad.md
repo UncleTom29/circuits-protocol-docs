@@ -1,57 +1,60 @@
 # ClawdHQLaunchpad
 
-`ClawdHQLaunchpad` is the token launchpad contract for Circuits Protocol agents. It allows agent creators to tokenize their agents with fixed-supply ERC-20 tokens (`AgentToken`) via a constant-product curve. Once enough liquidity is raised, the launch graduates and liquidity is automatically migrated to **Uniswap** on Arc.
+`ClawdHQLaunchpad.sol` is the fair-launch bonding curve tokenization contract on **Arc Testnet** (`0x48fc9aFF6C4F395f93B24627715f1ea1482555Cc`).
+
+It allows creators to tokenize their agents with constant-product bonding curves ($x \cdot y = k$), customizable fee buybacks (`buybackBps`), scheduled launch countdowns (`launchAt`), anti-snipe protections, and automated graduation to **Uniswap** on Arc.
 
 ---
 
-## Fair Launch & Tokenomics
+## Key Features & Constants
 
-All token launches on Circuits Protocol are **100% fair launches**:
-* **Fixed Supply**: Every agent token has a fixed total supply of exactly `1,000,000,000` (1 Billion) tokens.
-* **No Pre-Allocation**: The entire supply starts on the curve. The creator does not receive a minted pre-allocation.
-* **Creator Royalties**: Instead of a pre-mine, creators earn 30% of all trade fees generated on the curve, plus any direct revenue the agent earns from jobs.
-
----
-
-## The Constant-Product Curve ($x \cdot y = k$)
-
-The launchpad uses an AMM model based on the constant-product formula $x \cdot y = k$:
-* **Virtual USDC Reserve**: The curve starts with an `initialVirtualUsdcReserve` setting the initial floor price without requiring upfront creator capital. Real USDC spent to buy tokens is added to this reserve.
-* **Real Token Reserve**: The token side of the curve is the real remaining supply (`totalSupply - tokensSold`).
-* **Price**: Determined by the ratio of the virtual USDC reserve to the real token reserve. As tokens are bought, the price increases along the curve.
+| Constant | Value | Description |
+|---|---|---|
+| `TOTAL_SUPPLY` | `1,000,000,000` (1B) | Fixed total supply for every launched `AgentToken` |
+| `TRADE_FEE_BPS` | `200` (2.0%) | Standard trading fee on bonding curve |
+| `ANTI_SNIPE_FEE_BPS` | `2000` (20.0%) | Initial launch fee on non-creator buys to deter MEV bots |
+| `DEFAULT_BUYBACK_BPS` | `2000` (20.0%) | Default percentage of treasury fee pool used per buyback |
+| `GRADUATION_THRESHOLD` | `19,000 USDC` | Cumulative curve reserve required to trigger Uniswap graduation |
 
 ---
 
-## Trading Mechanics
+## Buyback & Burn Configuration
 
-### 1. `createLaunch`
-The agent owner calls this function to deploy a new `AgentToken`. They set the token name, symbol, and buyback frequency (`BuybackInterval`). Trading can start immediately, or the creator can specify a future `launchAt` timestamp.
-
-### 2. `buyTokens` & `sellTokens`
-Users buy and sell tokens directly against the curve. All trades are subject to a standard 2% fee (`TRADE_FEE_BPS`).
-
-### 3. Anti-Snipe Protection
-To prevent bots from front-running public launches, an anti-snipe fee (`ANTI_SNIPE_FEE_BPS` = 20%) is applied to buys during the anti-snipe block window for non-creators.
+The launchpad contract supports customizable automated buybacks:
+* **Configurable Buyback BPS**: Creators configure `buybackBps` (from 1 bps up to 10,000 bps = 100%, defaulting to 2,000 bps = 20%).
+* **Cadence Intervals**: Daily (`BuybackInterval.DAILY`), Weekly (`BuybackInterval.WEEKLY`), or Monthly (`BuybackInterval.MONTHLY`).
+* **Creator Updates**: Creators can modify buyback settings at any time using `updateBuybackConfig`.
 
 ---
 
-## Trade Fee Distribution & Automated Buybacks
+## Core Functions
 
-Every 2% trade fee (or anti-snipe fee) is distributed onchain via `_distributeTradeFee`:
-* **50%** routes to the **Protocol Treasury** (`treasury`).
-* **30%** routes to the **Creator / Agent Treasury** (`agentTreasury`).
-* **20%** accumulates in the launch-specific **Buyback Pool** (`buybackPoolUsdc`).
+### Launch Lifecycle
 
-When block time passes the configured `BuybackInterval` (Daily, Weekly, Monthly), anyone can call `executeBuyback`. This function uses accumulated USDC in the buyback pool to repurchase tokens from the curve and burn them, providing automated deflationary pressure.
+#### `createLaunch(uint256 agentId, string memory name, string memory symbol, string memory tokenUri, BuybackInterval buybackInterval, uint16 buybackBps, uint64 launchAt) external payable returns (uint256 launchId, address tokenAddress)`
+Deploys a new `AgentToken` contract with 1 Billion supply and initializes the constant-product curve.
+* **Requirements**:
+  * Caller must own `agentId` on `ClawdHQCore.sol`.
+  * `buybackBps <= 10000`.
+* **Emits**: `LaunchCreated(launchId, agentId, tokenAddress, creator, name, symbol, launchAt, buybackInterval, buybackBps)`.
 
----
+#### `buy(uint256 launchId, uint256 minTokensOut) external payable returns (uint256 tokensOut)`
+Buys agent tokens using native USDC against the bonding curve.
+* **Requirements**: `block.timestamp >= launch.launchAt`.
+* **Anti-Snipe**: Applies a 20% fee if executed in block zero by non-creators.
 
-## Uniswap Graduation
+#### `sell(uint256 launchId, uint256 tokenAmount, uint256 minUsdcOut) external returns (uint256 usdcOut)`
+Sells agent tokens back to the curve for native USDC.
 
-When a launch's real `usdcRaised` hits the `graduationThreshold` (defaulting to 19,000 USDC), the curve phase completes.
+#### `executeBuyback(uint256 launchId) external returns (uint256 tokensBurned)`
+Permissionlessly executes a scheduled buyback when `block.timestamp >= launch.nextBuybackAt`.
+* Spends `(treasuryBalance * launch.buybackBps) / 10000` USDC to market-buy tokens from the curve/AMM and transfers them permanently to `0x000000000000000000000000000000000000dEaD`.
+* **Emits**: `BuybackExecuted(launchId, usdcSpent, tokensBurned, nextBuybackAt)`.
 
-Anyone can call `graduateLaunch`, which:
-1. Takes the real raised USDC and the remaining unsold `AgentToken` supply.
-2. Seeds them as initial liquidity into **Uniswap V2** on Arc.
-3. Permanently locks the resulting LP tokens in the contract.
-4. Marks the token as graduated, allowing secondary trading on Uniswap with fee-on-transfer support.
+#### `updateBuybackConfig(uint256 launchId, BuybackInterval interval, uint16 buybackBps) external`
+Allows the launch creator to update the buyback cadence and basis points.
+* **Emits**: `BuybackConfigUpdated(launchId, interval, buybackBps)`.
+
+#### `graduateLaunch(uint256 launchId) external`
+Migrates accumulated USDC reserve and remaining tokens to the **Uniswap V2** liquidity pool on Arc, permanently burning the minted LP tokens.
+* **Emits**: `LaunchGraduated(launchId, tokenAddress, pairAddress, usdcLiquidity, tokenLiquidity)`.
