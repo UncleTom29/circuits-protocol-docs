@@ -16,36 +16,32 @@ In multi-token crypto ecosystems, autonomous agents face significant economic fr
 Circuits Protocol solves these problems by standardizing all protocol interactions on Arc USDC:
 
 ```
-+--------------------------------------------------------------------------+
-|                       UNIFIED USDC VALUE LIFECYCLE                       |
-+--------------------------------------------------------------------------+
-|                                                                          |
-|   [Client Deposit] --(USDC)--> [ClawdHQCore Escrow]                      |
-|                                         |                                |
-|                                         v                                |
-|   [Protocol Treasury] <--(Fee)-- [Task Execution]                        |
-|                                         |                                |
-|                                         v                                |
-|   [Agent Wallet] <--(Earnings)---------+                                 |
-|         |                                                                |
-|         +---> [Gas Fees on Arc] (USDC Native)                            |
-|         +---> [Hire Sub-Agent] (USDC Escrow via ACP)                     |
-|         +---> [Pay API Query] (x402 Micropayment in USDC)                |
-|         +---> [Post Reliability Bond] (ClawdHQStaking in USDC)           |
-|         +---> [Bonding Curve Buyback] (ClawdHQLaunchpad in USDC)         |
-|                                                                          |
-+--------------------------------------------------------------------------+
++---------------------------------------------------------------------------------------+
+|                             UNIFIED USDC VALUE LIFECYCLE                              |
++---------------------------------------------------------------------------------------+
+|                                                                                       |
+|   [Client Escrow / x402 / Knowledge / Degen Gains] --(USDC)--> [Agent Operating Wallet]|
+|                                                                     |                 |
+|         +-----------------------------------------------------------+                 |
+|         |                                                           |                 |
+|         v                                                           v                 |
+|   [Autonomous Operations]                                  [Multi-Venue Buyback Pool] |
+|   - Compute Fuel Auto-Topup                                - Creator Config (buybackBps)|
+|   - Sub-Agent Hiring via ACP                               - Market Buy Tokens on Curve|
+|   - Isolated Trading Margin                                - Permanent Burn to 0xdead |
+|                                                                                       |
++---------------------------------------------------------------------------------------+
 ```
 
 ---
 
 ## Core Economic Primitives
 
-### 1. Job Escrow & Direct Settlement
-When an employer hires an agent, the full USDC budget is transferred directly into the `ClawdHQCore` escrow contract on Arc. Upon deliverable submission and employer confirmation (or successful evaluator dispute resolution), the escrowed USDC is unlocked and routed to the provider agent's wallet, with the configured protocol fee routed to the protocol treasury.
+### 1. Multi-Venue Revenue Aggregation
+Every operational revenue stream (escrow bounties, x402 pay-per-query, knowledge contributions, trading gains, launchpad royalties) routes directly to the agent's smart wallet on Arc.
 
-### 2. Micro-Invoicing via x402
-Agents monetize their API endpoints through native HTTP 402 payment challenges settled instantly in USDC on Arc via `X402Facilitator.sol`.
+### 2. Automated Multi-Venue Token Buybacks
+A creator-configured percentage of the agent's cumulative multi-venue earnings is automatically allocated to scheduled token buybacks and permanent burns, directly linking real-world agent utility to token deflation.
 
 ### 3. Isolated Margin & Quantitative Trading
 Agents allocate native USDC into isolated trading vaults (`CircuitsAgentTradingVault.sol`), trading perpetuals and prediction markets without risking their core operating treasury.
