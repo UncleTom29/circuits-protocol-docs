@@ -1,43 +1,36 @@
-# Uniswap (DEX)
+# Uniswap DEX Integration
 
-**Uniswap** is the primary decentralized exchange within the Circuits Protocol ecosystem, supporting token graduation and trading on the **Arc blockchain**.
+**Uniswap** is the primary decentralized exchange within the Circuits Protocol ecosystem, supporting token graduation and secondary trading on the **Arc blockchain**.
+
+---
 
 ## Overview
 
-Uniswap will natively support Arc upon mainnet launch. It provides the essential automated market maker (AMM) infrastructure required for decentralized liquidity provision and token swapping.
+Uniswap provides the automated market maker (AMM) infrastructure required for decentralized liquidity provision and secondary token trading on Arc.
 
-While the protocol primarily runs on USDC, Uniswap plays a crucial role in the **Agent Launchpad**, enabling newly launched agent tokens to graduate into open, decentralized markets.
+When agent tokens graduate from the bonding curve, all raised USDC and unsold tokens migrate to Uniswap, creating deep, decentralized liquidity.
 
-{% hint style="info" %}
-On Arc Testnet, Circuits Protocol utilizes our gas-optimized Uniswap V2 fork (Xero Protocol) under the hood to simulate live swaps and liquidity migration until official mainnet Uniswap contract addresses are live.
-{% endhint %}
+---
 
-## Architecture
-
-The DEX integration consists of the standard Uniswap V2 contract architecture:
-
-- **Factory**: The core contract responsible for deploying new liquidity pools (Pairs) and tracking them.
-- **Router**: The routing contract that handles user interactions, calculating optimal swap paths, adding/removing liquidity, and enforcing slippage tolerances.
-
-## Launchpad Graduation Integration
+## Launchpad Graduation & Permanent LP Burn
 
 The most vital integration point for Uniswap is the `ClawdHQLaunchpad` smart contract.
 
-The Agent Launchpad allows users to launch tokens for specific agents using a constant-product bonding curve ($x * y = k$). Once the bonding curve reaches its predetermined funding target (market cap), the token successfully "graduates."
-
 ### The Graduation Process
 
-1. **Target Reached**: The launchpad curve hits the target USDC liquidity.
-2. **Liquidity Migration**: The `ClawdHQLaunchpad.graduateLaunch()` function is triggered.
-3. **Pool Creation**: The launchpad interacts with the Factory to create a new `Token/USDC` pair.
-4. **Liquidity Addition**: All the USDC accumulated in the bonding curve, along with the remaining unissued token supply, is deposited directly into the newly created Pair via the Router.
-5. **LP Token Burning**: To ensure the liquidity is locked forever and cannot be rug-pulled, the newly minted Liquidity Provider (LP) tokens are immediately sent to the zero address (`0x000...000`) or the `Dead` address, effectively burning them.
+1. **Target Reached**: The launchpad curve hits the 19,000 USDC reserve target.
+2. **Liquidity Migration**: `ClawdHQLaunchpad.graduateLaunch(launchId)` is triggered.
+3. **Pool Creation**: The launchpad creates a new `AgentToken/USDC` pair on the Uniswap Factory.
+4. **Liquidity Addition**: All accumulated USDC and remaining unsold tokens are deposited directly into the Pair via the Uniswap Router.
+5. **100% LP Token Burning**: The minted Liquidity Provider (LP) tokens are sent directly to `0x000000000000000000000000000000000000dEaD`, permanently burning them.
 
 {% hint style="success" %}
-**Permanent Liquidity**
-Because the LP tokens are burned during graduation, the foundational liquidity provided by the launchpad phase is permanently locked in Uniswap, providing a stable trading environment for the agent's economy.
+**Permanent Liquidity Guarantee**
+Because 100% of the LP tokens are burned during graduation, the foundational liquidity is permanently locked into Uniswap. It can never be removed or rug-pulled by anyone.
 {% endhint %}
 
-## Trading & Fees
+---
 
-Once graduated, the token can be traded freely on Uniswap by any user or agent. The DEX utilizes the standard Uniswap V2 0.3% swap fee mechanism, which accrues directly to the pool's liquidity providers (which, post-graduation, includes the permanently locked launchpad liquidity).
+## Trading & Fee Architecture
+
+Once graduated, the token can be traded freely on Uniswap by any human user or autonomous agent. The DEX utilizes standard Uniswap V2 routing with fee-on-transfer compatibility for the 2% token transfer fee.
